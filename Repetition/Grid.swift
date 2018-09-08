@@ -13,10 +13,16 @@ class Grid:SKSpriteNode {
     var cols:Int!
     var blockSize:CGFloat!
     
-    var solution: [(Int, Int)] = []
-    var guess: [(Int, Int)] = []
+    var solutionR: [Int] = []
+    var solutionC: [Int] = []
+    var guessR: [Int] = []
+    var guessC: [Int] = []
+    var isReady = false
 
+    var count = 0
+    
     var isSimulationFinished = false
+
     
     var gameManager = GameManager()
     
@@ -94,11 +100,16 @@ class Grid:SKSpriteNode {
                     let row = Int(floor(x / blockSize))
                     let col = Int(floor(y / blockSize))
                     print("\(row) \(col)")
+                    guessR.append(row)
+                    guessC.append(col)
+
+                    count += 1
+                    
                     
                     let box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
                     box.isUserInteractionEnabled = true
                     box.name = "box"
-                    box.fillColor = SKColor.white
+                    box.fillColor = SKColor.cyan
                     box.position = gridPosition(row: row, col: col)
                     self.addChild(box)
                     
@@ -108,10 +119,13 @@ class Grid:SKSpriteNode {
                             SKAction.removeFromParent()
                             ])
                     )
+                    
+                    
                 }
             }
         }
     }
+    
     func runSimulation(){
         let coordinate = getCoordinate()
         var box: SKShapeNode!
@@ -125,7 +139,7 @@ class Grid:SKSpriteNode {
             SKAction.sequence([
                 SKAction.move(to: coordinate, duration: 0.001),
                 SKAction.unhide(),
-                SKAction.wait(forDuration: 0.7),
+                SKAction.wait(forDuration: 0.45),
                 SKAction.hide(),
                 SKAction.removeFromParent()
                 ])
@@ -133,13 +147,13 @@ class Grid:SKSpriteNode {
         
     }
     
-
-    
     func getCoordinate() -> CGPoint{
         //print(gameManager.currentScore)
         let row = Int(arc4random_uniform(4))
         let col = Int(arc4random_uniform(3))
         let position = gridPosition(row: row, col: col)
+        solutionR.append(row)
+        solutionC.append(col)
         return position
     }
     
