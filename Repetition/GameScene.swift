@@ -16,14 +16,24 @@ class GameScene: SKScene {
     //var playButton: SKShapeNode!
     var startLevel: SKShapeNode!
     var startButton: SKShapeNode!
-    var instructions: SKLabelNode!
+    var endButton: SKShapeNode!
+    var instructionToStart: SKLabelNode!
+    var instructionToWait: SKLabelNode!
+    var instructionToGo: SKLabelNode!
+    var instructionToContinue: SKLabelNode!
+
     var touchPad: SKShapeNode!
     
     var game: GameManager!
     
     var currentScore: SKLabelNode!
+    var lastScore: SKLabelNode!
+
     var gameBG: SKShapeNode!
     var gameArray: [(node: SKShapeNode, x: Int, y: Int)] = []
+    
+    var correctRow: Int!
+    var correctCol: Int!
 
     var grid: Grid!
     var isUserReady = false
@@ -39,7 +49,6 @@ class GameScene: SKScene {
     }
     
     private func initializeGameView() {
-        //4
         currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         currentScore.zPosition = 1
         currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + 60)
@@ -64,30 +73,67 @@ class GameScene: SKScene {
         gameLogo.fontSize = 60
         gameLogo.text = "Repetition"
         //gameLogo.fontColor = SKColor(red: 36/255, green: 93/255, blue: 104/255, alpha: 1)
-        gameLogo.fontColor = SKColor(red: 209/255, green: 174/255, blue: 172/255, alpha: 1)
+        //gameLogo.fontColor = SKColor(red: 245/255, green: 208/255, blue: 76/255, alpha: 1)
+        gameLogo.fontColor = SKColor.cyan
         self.addChild(gameLogo)
         //Create best score label
         bestScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         bestScore.zPosition = 1
-        bestScore.position = CGPoint(x: 0, y: gameLogo.position.y - 50)
+        bestScore.position = CGPoint(x: 0, y: gameLogo.position.y - 70)
         bestScore.fontSize = 40
-        bestScore.text = "Best Score: 0"
+        //bestScore.text = "Best Score: 0"
         bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
         bestScore.fontColor = SKColor.white
         self.addChild(bestScore)
+        lastScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        lastScore.zPosition = 1
+        lastScore.position = CGPoint(x: 0, y: bestScore.position.y - 50)
+        lastScore.fontSize = 30
+        //lastScore.text = "Score: 0"
+        lastScore.text = "Last: \(UserDefaults.standard.integer(forKey: "lastScore"))"
+        lastScore.fontColor = SKColor.white
+        self.addChild(lastScore)
+        
         //Create game title
-        instructions = SKLabelNode(fontNamed: "ArialRoundedMTBold")
-        instructions.zPosition = 1
-        instructions.position = CGPoint(x: 0, y: (frame.size.height / -2) + 100)
-        instructions.fontSize = 25
-        instructions.text = "Tap Anywhere To Begin"
-        instructions.fontColor = SKColor.white
-        self.addChild(instructions)
+        instructionToStart = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        instructionToStart.zPosition = 1
+        instructionToStart.position = CGPoint(x: 0, y: (frame.size.height / -2) + 100)
+        instructionToStart.fontSize = 25
+        instructionToStart.text = "Tap Anywhere To Begin"
+        instructionToStart.fontColor = SKColor.white
+        self.addChild(instructionToStart)
+        
+        instructionToWait = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        instructionToWait.zPosition = 1
+        instructionToWait.position = CGPoint(x: 0, y: (frame.size.height / 2) - 200)
+        instructionToWait.fontSize = 27
+        instructionToWait.text = "Watch The Pattern"
+        instructionToWait.fontColor = SKColor.white
+        instructionToWait.isHidden = true
+        self.addChild(instructionToWait)
+        
+        instructionToGo = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        instructionToGo.zPosition = 1
+        instructionToGo.position = CGPoint(x: 0, y: (frame.size.height / 2) - 200)
+        instructionToGo.fontSize = 27
+        instructionToGo.text = "Repeat The Pattern"
+        instructionToGo.fontColor = SKColor.cyan
+        instructionToGo.isHidden = true
+        self.addChild(instructionToGo)
+        
+        instructionToContinue = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        instructionToContinue.zPosition = 1
+        instructionToContinue.position = CGPoint(x: 0, y: (frame.size.height / 2) - 200)
+        instructionToContinue.fontSize = 27
+        instructionToContinue.text = "Press Play To Continue"
+        instructionToContinue.fontColor = SKColor.cyan
+        instructionToContinue.isHidden = true
+        self.addChild(instructionToContinue)
         
         touchPad = SKShapeNode(rectOf: CGSize(width: frame.width, height: frame.height),
                                cornerRadius: 0)
         touchPad.name = "touch_pad"
-        touchPad.fillColor = SKColor.black
+        touchPad.fillColor = SKColor.clear
         self.addChild(touchPad)
         /*
         //Create play button
@@ -141,6 +187,13 @@ class GameScene: SKScene {
                     isUserReady = true
                     self.startButton.removeFromParent()
                 }
+                
+                if node.name == "end_button" {
+                    toMenu()
+                    game.updateScore()
+                    self.endButton.removeFromParent()
+                }
+                
             }
         }
     }
@@ -157,8 +210,8 @@ class GameScene: SKScene {
             self.playButton.isHidden = true
         }
  */
-        instructions.run(SKAction.scale(to: 0, duration: 0.3)) {
-            self.instructions.isHidden = true
+        instructionToStart.run(SKAction.scale(to: 0, duration: 0.3)) {
+            self.instructionToStart.isHidden = true
         }
         
         self.touchPad.isHidden = true
@@ -166,19 +219,16 @@ class GameScene: SKScene {
         //3
         let bottomCorner = CGPoint(x: 0, y: (frame.size.height / -2) + 20)
         bestScore.run(SKAction.move(to: bottomCorner, duration: 0.4))
+        lastScore.isHidden = true
         bestScore.run(SKAction.move(to: bottomCorner, duration: 0.4)) {
-            //self.gameBG.setScale(0)
             self.currentScore.setScale(0)
-            //self.gameBG.isHidden = false
             self.currentScore.isHidden = false
-            //self.gameBG.run(SKAction.scale(to: 1, duration: 0.4))
             self.currentScore.run(SKAction.scale(to: 1, duration: 0.4))
-            
-            //self.game.initGame()
+
         }
         
         userConfirmation()
-        
+        self.instructionToContinue.isHidden = false
         
 
         grid.isHidden = false
@@ -187,34 +237,99 @@ class GameScene: SKScene {
     
     func userConfirmation() {
         //Create start button
+        if gameOver == true {
+            endButton = SKShapeNode()
+            endButton.name = "end_button"
+            endButton.isHidden = true
+            endButton.zPosition = 1
+            endButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 200)
+            endButton.fillColor = SKColor.cyan
+            let t = CGPoint(x: -50, y: 50)
+            let b = CGPoint(x: -50, y: -50)
+            let m = CGPoint(x: 50, y: 0)
+            let path = CGMutablePath()
+            path.addLine(to: t)
+            path.addLines(between: [t, b, m])
+            endButton.path = path
+            self.addChild(endButton)
+            
+            self.endButton.run(
+                SKAction.sequence([
+                    SKAction.wait(forDuration: 0.47),
+                    SKAction.unhide()
+                    ])
+            )
+            
+        }
+        else {
+            startButton = SKShapeNode()
+            startButton.name = "start_button"
+            startButton.isHidden = true
+            startButton.zPosition = 1
+            startButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 200)
+            startButton.fillColor = SKColor.cyan
+            let t = CGPoint(x: -50, y: 50)
+            let b = CGPoint(x: -50, y: -50)
+            let m = CGPoint(x: 50, y: 0)
+            let path = CGMutablePath()
+            path.addLine(to: t)
+            path.addLines(between: [t, b, m])
+            startButton.path = path
+            self.addChild(startButton)
+            
+            self.startButton.run(
+                SKAction.sequence([
+                    SKAction.wait(forDuration: 0.47),
+                    SKAction.unhide()
+                    ])
+            )
+            
+        }
         
-        startButton = SKShapeNode()
-        startButton.name = "start_button"
-        startButton.zPosition = 1
-        startButton.position = CGPoint(x: frame.midX, y: frame.midY)
-        startButton.fillColor = SKColor.cyan
-        let t = CGPoint(x: -50, y: 50)
-        let b = CGPoint(x: -50, y: -50)
-        let m = CGPoint(x: 50, y: 0)
-        let path = CGMutablePath()
-        path.addLine(to: t)
-        path.addLines(between: [t, b, m])
-        startButton.path = path
-        self.addChild(startButton)
     }
     
     
     func runSimulation() {
         if isUserReady == true {
             if count < game.currentScore {
-                print("test")
+                //print("test")
+                instructionToContinue.isHidden = true
+                instructionToWait.isHidden = false
                 grid.runSimulation()
                 count += 1
             }
             else {
+                instructionToContinue.isHidden = true
+                instructionToWait.isHidden = true
+                instructionToGo.isHidden = false
                 grid.isSimulationFinished = true
             }
         }
+    }
+    
+    func toMenu() {
+        currentScore.run(SKAction.scale(to: 0, duration: 0.4)) {
+            self.currentScore.isHidden = true
+        }
+        instructionToContinue.isHidden = true
+        
+        self.gameLogo.isHidden = false
+        self.grid.isHidden = true
+        self.gameLogo.run(SKAction.move(to: CGPoint(x: 0, y: (self.frame.size.height / 2) - 200), duration: 0.5)) {
+            //self.scene.playButton.isHidden = false
+            //self.scene.playButton.run(SKAction.scale(to: 1, duration: 0.3))
+            self.instructionToStart.isHidden = false
+            self.instructionToStart.run(SKAction.scale(to: 1, duration: 0.3))
+            self.touchPad.isHidden = false
+            
+            self.bestScore.run(SKAction.move(to: CGPoint(x: 0, y: self.gameLogo.position.y - 70), duration: 0.3))
+        }
+        self.lastScore.run(
+            SKAction.sequence([
+                SKAction.wait(forDuration: 0.77),
+                SKAction.unhide()
+                ])
+        )
     }
     
     func checkForScore() -> Bool{
@@ -231,6 +346,9 @@ class GameScene: SKScene {
                 return true
             }
             else {
+                correctRow = grid.solutionR[0]
+                correctCol = grid.solutionC[0]
+                
                 grid.solutionR.removeAll()
                 grid.solutionC.removeAll()
                 grid.guessR.removeAll()

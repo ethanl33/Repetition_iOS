@@ -108,7 +108,7 @@ class Grid:SKSpriteNode {
                     
                     let box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
                     box.isUserInteractionEnabled = true
-                    box.name = "box"
+                    box.name = "box2"
                     box.fillColor = SKColor.cyan
                     box.position = gridPosition(row: row, col: col)
                     self.addChild(box)
@@ -126,11 +126,28 @@ class Grid:SKSpriteNode {
         }
     }
     
+    func showSolution(row: Int, col: Int) {
+        let box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
+        box.name = "box3"
+        box.fillColor = SKColor.clear
+        box.strokeColor = SKColor.green
+        box.lineWidth = 10
+        box.position = gridPosition(row: row, col: col)
+        self.addChild(box)
+        
+        box.run(
+            SKAction.sequence([
+                SKAction.wait(forDuration: 2.5),
+                SKAction.removeFromParent()
+                ])
+        )
+    }
+    
     func runSimulation(){
         let coordinate = getCoordinate()
         var box: SKShapeNode!
         box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
-        box.name = "box"
+        box.name = "box1"
         box.fillColor = SKColor.white
         box.isHidden = true
         self.addChild(box)
@@ -139,7 +156,7 @@ class Grid:SKSpriteNode {
             SKAction.sequence([
                 SKAction.move(to: coordinate, duration: 0.001),
                 SKAction.unhide(),
-                SKAction.wait(forDuration: 0.45),
+                SKAction.wait(forDuration: 0.55),
                 SKAction.hide(),
                 SKAction.removeFromParent()
                 ])
