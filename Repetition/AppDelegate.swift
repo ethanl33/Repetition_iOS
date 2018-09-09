@@ -18,11 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let defaults = UserDefaults.standard
-        let defaultValue = ["bestScore" : 0]
+        let defaultValue = ["bestScore" : 1]
         defaults.register(defaults: defaultValue)
         
         let defaults2 = UserDefaults.standard
-        let defaultValue2 = ["lastScore" : 0]
+        let defaultValue2 = ["lastScore" : 1]
         defaults2.register(defaults: defaultValue2)
 
         

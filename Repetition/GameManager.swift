@@ -32,7 +32,8 @@ class GameManager {
     func update(time: Double) {
         if nextTime == nil {
             nextTime = time + timeExtension
-        } else {
+        }
+        else {
             if time >= nextTime! {
                 nextTime = time + timeExtension
                 //print(time)
@@ -63,7 +64,6 @@ class GameManager {
             scene.isUserReady = false
             scene.count = 0
             scene.grid.isSimulationFinished = false
-            //print("test")
 
             scene.grid.showSolution(row: scene.correctRow, col: scene.correctCol)
             
@@ -71,9 +71,9 @@ class GameManager {
             self.scene.instructionToContinue.isHidden = false
             scene.instructionToWait.isHidden = true
             scene.instructionToGo.isHidden = true
-            //updateScore()
             scene.gameOver = false
         }
+        
         if scene.nextLevel == true {
             scene.isUserReady = false
             scene.count = 0
@@ -83,7 +83,6 @@ class GameManager {
             scene.nextLevel = false
             scene.userConfirmation()
             self.scene.instructionToContinue.isHidden = false
-
         }
     }
     
@@ -91,10 +90,10 @@ class GameManager {
         UserDefaults.standard.set(currentScore, forKey: "lastScore")
         scene.lastScore.text = "Last: \(UserDefaults.standard.integer(forKey: "lastScore"))"
 
-
         if currentScore > UserDefaults.standard.integer(forKey: "bestScore") {
             UserDefaults.standard.set(currentScore, forKey: "bestScore")
         }
+        
         currentScore = 1
         scene.currentScore.text = "Score: 1"
         scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"

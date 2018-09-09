@@ -9,20 +9,20 @@
 import SpriteKit
 
 class Grid:SKSpriteNode {
-    var rows:Int!
-    var cols:Int!
+    
     var blockSize:CGFloat!
     
     var solutionR: [Int] = []
     var solutionC: [Int] = []
     var guessR: [Int] = []
     var guessC: [Int] = []
-    var isReady = false
-
+    
+    var rows:Int!
+    var cols:Int!
     var count = 0
     
     var isSimulationFinished = false
-
+    var isReady = false
     
     var gameManager = GameManager()
     
@@ -39,7 +39,6 @@ class Grid:SKSpriteNode {
         
         
         self.isUserInteractionEnabled = true
-        
     }
     
     
@@ -137,7 +136,7 @@ class Grid:SKSpriteNode {
         
         box.run(
             SKAction.sequence([
-                SKAction.wait(forDuration: 2.5),
+                SKAction.wait(forDuration: 2.7),
                 SKAction.removeFromParent()
                 ])
         )
@@ -165,12 +164,13 @@ class Grid:SKSpriteNode {
     }
     
     func getCoordinate() -> CGPoint{
-        //print(gameManager.currentScore)
         let row = Int(arc4random_uniform(4))
         let col = Int(arc4random_uniform(3))
         let position = gridPosition(row: row, col: col)
+        
         solutionR.append(row)
         solutionC.append(col)
+        
         return position
     }
     
