@@ -28,8 +28,8 @@ class GameViewController: UIViewController {
             view.ignoresSiblingOrder = true
             // test 123
             
-            view.showsFPS = true //change to true for developer info
-            view.showsNodeCount = true //change to true for developer info
+            view.showsFPS = false //change to true for developer info
+            view.showsNodeCount = false //change to true for developer info
         }
     }
 

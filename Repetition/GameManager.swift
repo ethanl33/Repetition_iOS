@@ -13,7 +13,7 @@ class GameManager {
     var scene: GameScene!
     
     var nextTime: Double?
-    var timeExtension: Double = 0.8 //change this value to make game slower or faster
+    var timeExtension: Double = 0.5 //change this value to make game slower or faster
     
     var currentScore: Int = 1
     var lastScore: Int = 1
@@ -45,11 +45,11 @@ class GameManager {
     }
     
     private func checkForScore() {
-        scene.currentScore.text = "Score: \(currentScore)"
+        scene.currentScore.text = "Level: \(currentScore)"
         if scene.checkForScore() == true {
             if scene.nextLevel == true {
                 currentScore += 1
-                scene.currentScore.text = "Score: \(currentScore)"
+                scene.currentScore.text = "Level: \(currentScore)"
                 print("Next Level")
             }
             if scene.gameOver == true {
@@ -68,9 +68,10 @@ class GameManager {
             scene.grid.showSolution(row: scene.correctRow, col: scene.correctCol)
             
             scene.userConfirmation()
-            self.scene.instructionToContinue.isHidden = false
-            scene.instructionToWait.isHidden = true
-            scene.instructionToGo.isHidden = true
+            self.scene.instructionToContinue.isHidden = true
+            self.scene.instructionToWait.isHidden = true
+            self.scene.instructionToGo.isHidden = true
+            self.scene.instructionToMenu.isHidden = false
             scene.gameOver = false
         }
         
@@ -78,7 +79,7 @@ class GameManager {
             scene.isUserReady = false
             scene.count = 0
             scene.grid.isSimulationFinished = false
-            scene.instructionToGo.isHidden = true
+            self.scene.instructionToGo.isHidden = true
             
             scene.nextLevel = false
             scene.userConfirmation()
@@ -95,7 +96,7 @@ class GameManager {
         }
         
         currentScore = 1
-        scene.currentScore.text = "Score: 1"
+        scene.currentScore.text = "Level: 1"
         scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
         
     }

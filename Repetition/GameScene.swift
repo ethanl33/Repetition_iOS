@@ -23,6 +23,7 @@ class GameScene: SKScene {
     var instructionToWait: SKLabelNode!
     var instructionToGo: SKLabelNode!
     var instructionToContinue: SKLabelNode!
+    var instructionToMenu: SKLabelNode!
     var currentScore: SKLabelNode!
     var lastScore: SKLabelNode!
     
@@ -50,7 +51,7 @@ class GameScene: SKScene {
         currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + 61)
         currentScore.fontSize = 41
         currentScore.isHidden = true
-        currentScore.text = "Score: 1"
+        currentScore.text = "Level: 1"
         currentScore.fontColor = SKColor.white
         self.addChild(currentScore)
         
@@ -127,6 +128,15 @@ class GameScene: SKScene {
         instructionToContinue.fontColor = SKColor.cyan
         instructionToContinue.isHidden = true
         self.addChild(instructionToContinue)
+        
+        instructionToMenu = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        instructionToMenu.zPosition = 1
+        instructionToMenu.position = CGPoint(x: 0, y: (frame.size.height / 2) - 201)
+        instructionToMenu.fontSize = 28
+        instructionToMenu.text = "Incorrect: Correction Highlighted"
+        instructionToMenu.fontColor = SKColor.cyan
+        instructionToMenu.isHidden = true
+        self.addChild(instructionToMenu)
         
         touchPad = SKShapeNode(rectOf: CGSize(width: frame.width, height: frame.height),
                                cornerRadius: 0)
@@ -243,13 +253,18 @@ class GameScene: SKScene {
             startButton.path = p
             self.addChild(startButton)
             
-            self.startButton.run(
-                SKAction.sequence([
-                    SKAction.wait(forDuration: 0.47),
-                    SKAction.unhide()
-                    ])
-            )
-            
+            if nextLevel == true {
+                self.startButton.isHidden = false
+            }
+            else {
+                self.startButton.run(
+                    SKAction.sequence([
+                        SKAction.wait(forDuration: 0.27),
+                        SKAction.unhide()
+                        ])
+                )
+
+            }
         }
         
     }
@@ -277,6 +292,8 @@ class GameScene: SKScene {
             self.currentScore.isHidden = true
         }
         instructionToContinue.isHidden = true
+        instructionToMenu.isHidden = true
+
         
         self.gameLogo.isHidden = false
         self.grid.isHidden = true

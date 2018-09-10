@@ -20,6 +20,8 @@ class Grid:SKSpriteNode {
     var rows:Int!
     var cols:Int!
     var count = 0
+    var prevRow = -1
+    var prevCol = -1
     
     var isSimulationFinished = false
     var isReady = false
@@ -136,7 +138,7 @@ class Grid:SKSpriteNode {
         
         box.run(
             SKAction.sequence([
-                SKAction.wait(forDuration: 2.7),
+                SKAction.wait(forDuration: 4.7),
                 SKAction.removeFromParent()
                 ])
         )
@@ -164,8 +166,15 @@ class Grid:SKSpriteNode {
     }
     
     func getCoordinate() -> CGPoint{
-        let row = Int(arc4random_uniform(4))
-        let col = Int(arc4random_uniform(3))
+        var row = Int(arc4random_uniform(4))
+        var col = Int(arc4random_uniform(3))
+        while prevRow == row || prevCol == col {
+            row = Int(arc4random_uniform(4))
+            col = Int(arc4random_uniform(3))
+        }
+        prevRow = row
+        prevCol = col
+        
         let position = gridPosition(row: row, col: col)
         
         solutionR.append(row)
