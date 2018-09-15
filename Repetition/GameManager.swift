@@ -38,66 +38,58 @@ class GameManager {
                 nextTime = time + timeExtension
                 //print(time)
                 checkForScore()
-                update()
-                scene.runSimulation()
+                self.scene.runSimulation()
             }
         }
     }
     
     private func checkForScore() {
-        scene.currentScore.text = "Level: \(currentScore)"
+        self.scene.currentScore.text = "Level: \(currentScore)"
         if scene.checkForScore() == true {
             if scene.nextLevel == true {
                 currentScore += 1
-                scene.currentScore.text = "Level: \(currentScore)"
-                print("Next Level")
+                self.scene.currentScore.text = "Level: \(currentScore)"
+                self.scene.userConfirmation()
+                self.scene.isUserReady = false
+                self.scene.count = 0
+                self.scene.grid.isSimulationFinished = false
+                self.scene.instructionToGo.isHidden = true
+                self.scene.correct.isHidden = false
+
+                self.scene.nextLevel = false
+                //self.scene.instructionToContinue.isHidden = false
+                //print("Next Level")
             }
             if scene.gameOver == true {
-                print("Game Over")
+                //print("Game Over")
+                self.scene.isUserReady = false
+                self.scene.count = 0
+                self.scene.grid.isSimulationFinished = false
+                
+                self.scene.grid.showSolution(row: scene.correctRow, col: scene.correctCol)
+                
+                self.scene.userConfirmation()
+                self.scene.instructionToContinue.isHidden = true
+                self.scene.instructionToWait.isHidden = true
+                self.scene.instructionToGo.isHidden = true
+                self.scene.instructionToMenu.isHidden = false
+                self.scene.gameOver = false
             }
         }
         
-    }
-    private func update() {
-
-        if scene.gameOver == true {
-            scene.isUserReady = false
-            scene.count = 0
-            scene.grid.isSimulationFinished = false
-
-            scene.grid.showSolution(row: scene.correctRow, col: scene.correctCol)
-            
-            scene.userConfirmation()
-            self.scene.instructionToContinue.isHidden = true
-            self.scene.instructionToWait.isHidden = true
-            self.scene.instructionToGo.isHidden = true
-            self.scene.instructionToMenu.isHidden = false
-            scene.gameOver = false
-        }
-        
-        if scene.nextLevel == true {
-            scene.isUserReady = false
-            scene.count = 0
-            scene.grid.isSimulationFinished = false
-            self.scene.instructionToGo.isHidden = true
-            
-            scene.nextLevel = false
-            scene.userConfirmation()
-            self.scene.instructionToContinue.isHidden = false
-        }
     }
     
     func updateScore() {
         UserDefaults.standard.set(currentScore, forKey: "lastScore")
-        scene.lastScore.text = "Last: \(UserDefaults.standard.integer(forKey: "lastScore"))"
+        self.scene.lastScore.text = "Last: \(UserDefaults.standard.integer(forKey: "lastScore"))"
 
         if currentScore > UserDefaults.standard.integer(forKey: "bestScore") {
             UserDefaults.standard.set(currentScore, forKey: "bestScore")
         }
         
         currentScore = 1
-        scene.currentScore.text = "Level: 1"
-        scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
+        self.scene.currentScore.text = "Level: 1"
+        self.scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
         
     }
 

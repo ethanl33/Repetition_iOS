@@ -19,6 +19,7 @@ class GameScene: SKScene {
     
     var gameLogo: SKLabelNode!
     var bestScore: SKLabelNode!
+    var correct: SKLabelNode!
     var instructionToStart: SKLabelNode!
     var instructionToWait: SKLabelNode!
     var instructionToGo: SKLabelNode!
@@ -68,7 +69,7 @@ class GameScene: SKScene {
         gameLogo.zPosition = 1
         gameLogo.position = CGPoint(x: 0, y: (frame.size.height / 2) - 201)
         gameLogo.fontSize = 61
-        gameLogo.text = "Repetition"
+        gameLogo.text = "Repetition."
         //gameLogo.fontColor = SKColor(red: 36/255, green: 93/255, blue: 104/255, alpha: 1)
         //gameLogo.fontColor = SKColor(red: 245/255, green: 208/255, blue: 76/255, alpha: 1)
         gameLogo.fontColor = SKColor.cyan
@@ -138,6 +139,15 @@ class GameScene: SKScene {
         instructionToMenu.isHidden = true
         self.addChild(instructionToMenu)
         
+        correct = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        correct.zPosition = 1
+        correct.position = CGPoint(x: 0, y: (frame.size.height / 2) - 201)
+        correct.fontSize = 28
+        correct.text = "Correct"
+        correct.fontColor = SKColor.cyan
+        correct.isHidden = true
+        self.addChild(correct)
+        
         touchPad = SKShapeNode(rectOf: CGSize(width: frame.width, height: frame.height),
                                cornerRadius: 0)
         touchPad.name = "touch_pad"
@@ -165,6 +175,7 @@ class GameScene: SKScene {
             for node in touchedNode {
                 
                 if node.name == "touch_pad" {
+                    self.lastScore.isHidden = true
                     startGame()
                 }
  
@@ -177,6 +188,7 @@ class GameScene: SKScene {
                     toMenu()
                     game.updateScore()
                     self.endButton.removeFromParent()
+                    self.grid.box.removeFromParent()
                 }
                 
             }
@@ -184,7 +196,7 @@ class GameScene: SKScene {
     }
     
     private func startGame() {
-        print("start game")
+        //print("start game")
         gameLogo.run(SKAction.move(by: CGVector(dx: -50, dy: 600), duration: 0.5)) {
             self.gameLogo.isHidden = true
         }
@@ -192,10 +204,10 @@ class GameScene: SKScene {
         self.instructionToStart.isHidden = true
         
         self.touchPad.isHidden = true
+        self.lastScore.isHidden = true
         
         let bottomCorner = CGPoint(x: 0, y: (frame.size.height / -2) + 21)
         bestScore.run(SKAction.move(to: bottomCorner, duration: 0.4))
-        lastScore.isHidden = true
         bestScore.run(SKAction.move(to: bottomCorner, duration: 0.4)) {
             self.currentScore.setScale(0)
             self.currentScore.isHidden = false
@@ -207,7 +219,7 @@ class GameScene: SKScene {
         self.instructionToContinue.isHidden = false
         
 
-        grid.isHidden = false
+        self.grid.isHidden = false
         
     }
     
@@ -220,13 +232,13 @@ class GameScene: SKScene {
             endButton.zPosition = 1
             endButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
             endButton.fillColor = SKColor.cyan
-            let t = CGPoint(x: -49, y: 49)
-            let b = CGPoint(x: -49, y: -49)
-            let m = CGPoint(x: 49, y: 0)
+            let t = CGPoint(x: -52, y: 52)
+            let b = CGPoint(x: -52, y: -52)
+            let m = CGPoint(x: 52, y: 0)
             let p = CGMutablePath()
             p.addLine(to: t)
             p.addLines(between: [t, b, m])
-            endButton.path = p
+            self.endButton.path = p
             self.addChild(endButton)
             
             self.endButton.run(
@@ -244,13 +256,13 @@ class GameScene: SKScene {
             startButton.zPosition = 1
             startButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
             startButton.fillColor = SKColor.cyan
-            let t = CGPoint(x: -49, y: 49)
-            let b = CGPoint(x: -49, y: -49)
-            let m = CGPoint(x: 49, y: 0)
+            let t = CGPoint(x: -52, y: 52)
+            let b = CGPoint(x: -52, y: -52)
+            let m = CGPoint(x: 52, y: 0)
             let p = CGMutablePath()
             p.addLine(to: t)
             p.addLines(between: [t, b, m])
-            startButton.path = p
+            self.startButton.path = p
             self.addChild(startButton)
             
             if nextLevel == true {
@@ -273,16 +285,18 @@ class GameScene: SKScene {
     func runSimulation() {
         if isUserReady == true {
             if count < game.currentScore {
-                instructionToContinue.isHidden = true
-                instructionToWait.isHidden = false
-                grid.runSimulation()
-                count += 1
+                self.instructionToContinue.isHidden = true
+                self.correct.isHidden = true
+                self.instructionToWait.isHidden = false
+                self.grid.runSimulation()
+                self.count += 1
             }
             else {
-                instructionToContinue.isHidden = true
-                instructionToWait.isHidden = true
-                instructionToGo.isHidden = false
-                grid.isSimulationFinished = true
+                self.instructionToContinue.isHidden = true
+                self.correct.isHidden = true
+                self.instructionToWait.isHidden = true
+                self.instructionToGo.isHidden = false
+                self.grid.isSimulationFinished = true
             }
         }
     }
@@ -291,8 +305,8 @@ class GameScene: SKScene {
         currentScore.run(SKAction.scale(to: 0, duration: 0.4)) {
             self.currentScore.isHidden = true
         }
-        instructionToContinue.isHidden = true
-        instructionToMenu.isHidden = true
+        self.instructionToContinue.isHidden = true
+        self.instructionToMenu.isHidden = true
 
         
         self.gameLogo.isHidden = false
@@ -304,9 +318,10 @@ class GameScene: SKScene {
             
             self.bestScore.run(SKAction.move(to: CGPoint(x: 0, y: self.gameLogo.position.y - 71), duration: 0.3))
         }
+        
         self.lastScore.run(
             SKAction.sequence([
-                SKAction.wait(forDuration: 0.77),
+                SKAction.wait(forDuration: 0.37),
                 SKAction.unhide()
                 ])
         )
@@ -315,26 +330,28 @@ class GameScene: SKScene {
     func checkForScore() -> Bool{
         if grid.isSimulationFinished == true && grid.guessR.isEmpty == false && grid.guessC.isEmpty == false {
             if grid.solutionR[0] == grid.guessR[0] && grid.solutionC[0] == grid.guessC[0] {
-                grid.solutionR.remove(at: 0)
-                grid.solutionC.remove(at: 0)
-                grid.guessR.remove(at: 0)
-                grid.guessC.remove(at: 0)
+                self.grid.solutionR.remove(at: 0)
+                self.grid.solutionC.remove(at: 0)
+                self.grid.guessR.remove(at: 0)
+                self.grid.guessC.remove(at: 0)
                 
                 if grid.solutionR.isEmpty == true && grid.solutionC.isEmpty == true {
-                    nextLevel = true
+                    self.nextLevel = true
+                    self.grid.guessR.removeAll()
+                    self.grid.guessC.removeAll()
                 }
                 return true
             }
             else {
-                correctRow = grid.solutionR[0]
-                correctCol = grid.solutionC[0]
+                self.correctRow = grid.solutionR[0]
+                self.correctCol = grid.solutionC[0]
                 
-                grid.solutionR.removeAll()
-                grid.solutionC.removeAll()
-                grid.guessR.removeAll()
-                grid.guessC.removeAll()
+                self.grid.solutionR.removeAll()
+                self.grid.solutionC.removeAll()
+                self.grid.guessR.removeAll()
+                self.grid.guessC.removeAll()
                 
-                gameOver = true
+                self.gameOver = true
                 return true
             }
         }

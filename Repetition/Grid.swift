@@ -25,6 +25,7 @@ class Grid:SKSpriteNode {
     
     var isSimulationFinished = false
     var isReady = false
+    var box: SKShapeNode!
     
     var gameManager = GameManager()
     
@@ -100,7 +101,8 @@ class Grid:SKSpriteNode {
                     let x = size.height / 2 - position.y
                     let row = Int(floor(x / blockSize))
                     let col = Int(floor(y / blockSize))
-                    print("\(row) \(col)")
+                    //print("\(row) \(col)")
+                    
                     guessR.append(row)
                     guessC.append(col)
 
@@ -128,20 +130,13 @@ class Grid:SKSpriteNode {
     }
     
     func showSolution(row: Int, col: Int) {
-        let box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
+        box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
         box.name = "box3"
         box.fillColor = SKColor.clear
         box.strokeColor = SKColor.green
         box.lineWidth = 10
         box.position = gridPosition(row: row, col: col)
         self.addChild(box)
-        
-        box.run(
-            SKAction.sequence([
-                SKAction.wait(forDuration: 4.7),
-                SKAction.removeFromParent()
-                ])
-        )
     }
     
     func runSimulation(){
