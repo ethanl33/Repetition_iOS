@@ -38,6 +38,7 @@ class GameScene: SKScene {
     var nextLevel = false
     var gameOver = false
     var count: Int = 0
+    var patternLength: Int = 1
 
     
     override func didMove(to view: SKView) {
@@ -69,7 +70,7 @@ class GameScene: SKScene {
         gameLogo.zPosition = 1
         gameLogo.position = CGPoint(x: 0, y: (frame.size.height / 2) - 201)
         gameLogo.fontSize = 61
-        gameLogo.text = "Repetition."
+        gameLogo.text = "Repetition"
         //gameLogo.fontColor = SKColor(red: 36/255, green: 93/255, blue: 104/255, alpha: 1)
         //gameLogo.fontColor = SKColor(red: 245/255, green: 208/255, blue: 76/255, alpha: 1)
         gameLogo.fontColor = SKColor.cyan
@@ -284,7 +285,11 @@ class GameScene: SKScene {
     
     func runSimulation() {
         if isUserReady == true {
-            if count < game.currentScore {
+            let x = (patternLength * (patternLength + 1)) / 2
+            if (game.currentScore > x) {
+                patternLength += 1
+            }
+            if count < patternLength {
                 self.instructionToContinue.isHidden = true
                 self.correct.isHidden = true
                 self.instructionToWait.isHidden = false

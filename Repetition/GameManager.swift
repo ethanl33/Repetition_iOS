@@ -64,6 +64,7 @@ class GameManager {
                 //print("Game Over")
                 self.scene.isUserReady = false
                 self.scene.count = 0
+                self.scene.patternLength = 1
                 self.scene.grid.isSimulationFinished = false
                 
                 self.scene.grid.showSolution(row: scene.correctRow, col: scene.correctCol)
