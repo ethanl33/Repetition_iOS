@@ -9,18 +9,23 @@
 import SpriteKit
 import GameplayKit
 
+
 class GameScene: SKScene {
     
     
-    var touchPad: SKShapeNode!
+    var beginGame: SKShapeNode!
     var startLevel: SKShapeNode!
     var startButton: SKShapeNode!
     var endButton: SKShapeNode!
+
+    var volumeButton: SKSpriteNode!
+    var muteButton: SKSpriteNode!
+
     
     var gameLogo: SKLabelNode!
     var bestScore: SKLabelNode!
     var correct: SKLabelNode!
-    var instructionToStart: SKLabelNode!
+    //var instructionToStart: SKLabelNode!
     var instructionToWait: SKLabelNode!
     var instructionToGo: SKLabelNode!
     var instructionToContinue: SKLabelNode!
@@ -45,6 +50,8 @@ class GameScene: SKScene {
         initializeMenu()
         game = GameManager(scene: self)
         initializeGameView()
+        
+        
     }
     
     private func initializeGameView() {
@@ -57,6 +64,8 @@ class GameScene: SKScene {
         currentScore.fontColor = SKColor.white
         self.addChild(currentScore)
         
+        //GameViewController.sharedHelper.startBackgroundMusic()
+
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -65,6 +74,8 @@ class GameScene: SKScene {
     }
     
     private func initializeMenu() {
+
+        
         //Create game title
         gameLogo = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         gameLogo.zPosition = 1
@@ -95,14 +106,16 @@ class GameScene: SKScene {
         lastScore.fontColor = SKColor.white
         self.addChild(lastScore)
         
+        /*
         //Create game title
         instructionToStart = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         instructionToStart.zPosition = 1
         instructionToStart.position = CGPoint(x: 0, y: (frame.size.height / -2) + 101)
         instructionToStart.fontSize = 26
-        instructionToStart.text = "Tap Anywhere To Begin"
+        instructionToStart.text = "Press Play To Start"
         instructionToStart.fontColor = SKColor.white
         self.addChild(instructionToStart)
+ */
         
         instructionToWait = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         instructionToWait.zPosition = 1
@@ -122,6 +135,7 @@ class GameScene: SKScene {
         instructionToGo.isHidden = true
         self.addChild(instructionToGo)
         
+        
         instructionToContinue = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         instructionToContinue.zPosition = 1
         instructionToContinue.position = CGPoint(x: 0, y: (frame.size.height / 2) - 201)
@@ -130,6 +144,7 @@ class GameScene: SKScene {
         instructionToContinue.fontColor = SKColor.cyan
         instructionToContinue.isHidden = true
         self.addChild(instructionToContinue)
+ 
         
         instructionToMenu = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         instructionToMenu.zPosition = 1
@@ -148,12 +163,73 @@ class GameScene: SKScene {
         correct.fontColor = SKColor.cyan
         correct.isHidden = true
         self.addChild(correct)
+ 
+        var posX: CGFloat = 0.0
         
-        touchPad = SKShapeNode(rectOf: CGSize(width: frame.width, height: frame.height),
-                               cornerRadius: 0)
-        touchPad.name = "touch_pad"
-        touchPad.fillColor = SKColor.clear
-        self.addChild(touchPad)
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 1136:
+                //print("iPhone 5 or 5S or 5C")
+                posX = 80.0
+            case 1334:
+                //print("iPhone 6/6S/7/8")
+                posX = 80.0
+            case 1920, 2208:
+                //print("iPhone 6+/6S+/7+/8+")
+                posX = 80.0
+            case 2436:
+                //print("iPhone X, Xs")
+                posX = 140.0
+            case 2688:
+                //print("iPhone Xs Max")
+                posX = 140.0
+            case 1792:
+                //print("iPhone Xr")
+                posX = 140.0
+            default:
+                //print("unknown")
+                posX = 140.0
+            }
+        }
+        
+        let imageTexture1 = SKTexture(imageNamed: "volume")
+        volumeButton = SKSpriteNode(texture: imageTexture1)
+        self.isUserInteractionEnabled = true
+        volumeButton.name = "volume_button"
+        volumeButton.isHidden = true
+        volumeButton.zPosition = 1
+        volumeButton.position = CGPoint(x: -(frame.size.width / 2) + posX, y: (frame.size.height / 2) - 101)
+        //volumeButton.color = UIColor.white
+        //volumeButton.colorBlendFactor = 1.0
+        volumeButton.setScale(0.55)
+        self.addChild(volumeButton)
+        
+        let imageTexture2 = SKTexture(imageNamed: "mute")
+        muteButton = SKSpriteNode(texture: imageTexture2)
+        self.isUserInteractionEnabled = true
+        muteButton.name = "mute_button"
+        muteButton.isHidden = false
+        muteButton.zPosition = 1
+        muteButton.position = CGPoint(x: -(frame.size.width / 2) + posX, y: (frame.size.height / 2) - 101)
+        //muteButton.color = UIColor.cyan
+        //muteButton.colorBlendFactor = 1.0
+        muteButton.setScale(0.55)
+        self.addChild(muteButton)
+        
+        beginGame = SKShapeNode()
+        beginGame.isHidden = false
+        beginGame.zPosition = 1
+        beginGame.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
+        beginGame.fillColor = SKColor.cyan
+        let t = CGPoint(x: -52, y: 52)
+        let b = CGPoint(x: -52, y: -52)
+        let m = CGPoint(x: 52, y: 0)
+        let p = CGMutablePath()
+        p.addLine(to: t)
+        p.addLines(between: [t, b, m])
+        self.beginGame.path = p
+        beginGame.name = "begin_game"
+        self.addChild(beginGame)
         
         
         let cellWidth: CGFloat = frame.size.width / 4
@@ -174,22 +250,36 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-                
-                if node.name == "touch_pad" {
-                    self.lastScore.isHidden = true
-                    startGame()
+                if node.name == "volume_button" || node.name == "mute_button" {
+                    if node.name == "mute_button" {
+                        volumeButton.isHidden = false
+                        muteButton.isHidden = true
+                        GameViewController.sharedHelper.startBackgroundMusic()
+                    }
+                    else {
+                        volumeButton.isHidden = true
+                        muteButton.isHidden = false
+                        GameViewController.sharedHelper.muteBackgroundMusic()
+                    }
                 }
- 
-                if node.name == "start_button" {
-                    isUserReady = true
-                    self.startButton.removeFromParent()
-                }
-                
-                if node.name == "end_button" {
-                    toMenu()
-                    game.updateScore()
-                    self.endButton.removeFromParent()
-                    self.grid.box.removeFromParent()
+                else {
+                    
+                    if node.name == "begin_game" {
+                        self.lastScore.isHidden = true
+                        startGame()
+                    }
+                    
+                    if node.name == "start_button" {
+                        isUserReady = true
+                        self.startButton.removeFromParent()
+                    }
+                    
+                    if node.name == "end_button" {
+                        toMenu()
+                        game.updateScore()
+                        self.endButton.removeFromParent()
+                        self.grid.box.removeFromParent()
+                    }
                 }
                 
             }
@@ -202,9 +292,9 @@ class GameScene: SKScene {
             self.gameLogo.isHidden = true
         }
 
-        self.instructionToStart.isHidden = true
+        //self.instructionToStart.isHidden = true
         
-        self.touchPad.isHidden = true
+        self.beginGame.isHidden = true
         self.lastScore.isHidden = true
         
         let bottomCorner = CGPoint(x: 0, y: (frame.size.height / -2) + 21)
@@ -251,6 +341,7 @@ class GameScene: SKScene {
             
         }
         else {
+            
             startButton = SKShapeNode()
             startButton.name = "start_button"
             startButton.isHidden = true
@@ -310,16 +401,16 @@ class GameScene: SKScene {
         currentScore.run(SKAction.scale(to: 0, duration: 0.4)) {
             self.currentScore.isHidden = true
         }
-        self.instructionToContinue.isHidden = true
+        //self.instructionToContinue.isHidden = true
         self.instructionToMenu.isHidden = true
 
         
         self.gameLogo.isHidden = false
         self.grid.isHidden = true
         self.gameLogo.run(SKAction.move(to: CGPoint(x: 0, y: (self.frame.size.height / 2) - 201), duration: 0.5)) {
-            self.instructionToStart.isHidden = false
-            self.instructionToStart.run(SKAction.scale(to: 1, duration: 0.3))
-            self.touchPad.isHidden = false
+            //self.instructionToStart.isHidden = false
+            //self.instructionToStart.run(SKAction.scale(to: 1, duration: 0.3))
+            self.beginGame.isHidden = false
             
             self.bestScore.run(SKAction.move(to: CGPoint(x: 0, y: self.gameLogo.position.y - 71), duration: 0.3))
         }

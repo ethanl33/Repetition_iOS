@@ -17,6 +17,7 @@ class Grid:SKSpriteNode {
     var guessR: [Int] = []
     var guessC: [Int] = []
     
+    
     var rows:Int!
     var cols:Int!
     var count = 0

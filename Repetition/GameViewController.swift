@@ -9,8 +9,39 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameViewController: UIViewController {
+    
+    static let sharedHelper = GameViewController()
+    var audioPlayer: AVAudioPlayer?
+    
+    func startBackgroundMusic() {
+        let aSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "music", ofType: "wav")!)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf:aSound as URL)
+            audioPlayer!.numberOfLoops = -1
+            audioPlayer!.prepareToPlay()
+            audioPlayer!.play()
+        } catch {
+            print("Cannot play the file")
+        }
+    }
+    
+    func muteBackgroundMusic() {
+        let aSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "music", ofType: "wav")!)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf:aSound as URL)
+            audioPlayer!.stop()
+            
+        } catch {
+            print("Cannot pause the file")
+        }
+        
+    }
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
