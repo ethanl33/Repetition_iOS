@@ -26,6 +26,7 @@ class Grid:SKSpriteNode {
     
     var isSimulationFinished = false
     var isReady = false
+    var isInsane = false
     var box: SKShapeNode!
     
     var gameManager = GameManager()
@@ -81,8 +82,10 @@ class Grid:SKSpriteNode {
     
     func gridPosition(row:Int, col:Int) -> CGPoint {
         let offset = blockSize / 2.0 + 0.5
-        let x = CGFloat(col) * blockSize - (blockSize * CGFloat(cols)) / 2.0 + offset
-        let y = CGFloat(rows - row - 1) * blockSize - (blockSize * CGFloat(rows)) / 2.0 + offset
+        var x = (CGFloat(col) * blockSize) - ((blockSize * CGFloat(cols)) / 2.0)
+        x += offset
+        var y = CGFloat(rows - row - 1) * blockSize - (blockSize * CGFloat(rows)) / 2.0
+        y += offset
         return CGPoint(x:x, y:y)
     }
     
@@ -113,7 +116,15 @@ class Grid:SKSpriteNode {
                     let box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
                     box.isUserInteractionEnabled = true
                     box.name = "box2"
-                    box.fillColor = SKColor.cyan
+                    
+                    if isInsane {
+                        box.fillColor = SKColor.red
+                    }
+                    else {
+                        box.fillColor = SKColor.cyan
+                    }
+ 
+                    //box.fillColor = SKColor.cyan
                     box.position = gridPosition(row: row, col: col)
                     self.addChild(box)
                     

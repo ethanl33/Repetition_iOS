@@ -54,6 +54,13 @@ class GameManager {
                 self.scene.count = 0
                 self.scene.grid.isSimulationFinished = false
                 self.scene.instructionToGo.isHidden = true
+                
+                if self.scene.isInsane {
+                    self.scene.correct.fontColor = SKColor.red
+                }
+                else {
+                    self.scene.correct.fontColor = SKColor.cyan
+                }
                 self.scene.correct.isHidden = false
 
                 self.scene.nextLevel = false
@@ -73,7 +80,15 @@ class GameManager {
                 self.scene.instructionToContinue.isHidden = true
                 self.scene.instructionToWait.isHidden = true
                 self.scene.instructionToGo.isHidden = true
+                
+                if self.scene.isInsane {
+                    self.scene.instructionToMenu.fontColor = SKColor.red
+                }
+                else {
+                    self.scene.instructionToMenu.fontColor = SKColor.cyan
+                }
                 self.scene.instructionToMenu.isHidden = false
+                
                 self.scene.gameOver = false
             }
         }
@@ -93,6 +108,7 @@ class GameManager {
         self.scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
         
     }
+    
 
 
     

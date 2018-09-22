@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D478E702155C7DA009C798A /* insanity.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D478E6F2155C7DA009C798A /* insanity.png */; };
+		9D478E722155CC4C009C798A /* insanity_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D478E712155CC4C009C798A /* insanity_red.png */; };
 		9D81F689212DCDBD00AA5F1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D81F688212DCDBD00AA5F1F /* AppDelegate.swift */; };
 		9D81F68B212DCDBD00AA5F1F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D81F68A212DCDBD00AA5F1F /* GameScene.sks */; };
 		9D81F68D212DCDBD00AA5F1F /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D81F68C212DCDBD00AA5F1F /* Actions.sks */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9D478E6F2155C7DA009C798A /* insanity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insanity.png; sourceTree = "<group>"; };
+		9D478E712155CC4C009C798A /* insanity_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insanity_red.png; sourceTree = "<group>"; };
 		9D81F685212DCDBD00AA5F1F /* Repetition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repetition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D81F688212DCDBD00AA5F1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D81F68A212DCDBD00AA5F1F /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 				9DC4D4B721549BFD00ED5B69 /* music.wav */,
 				9DC4D4C92154BFBB00ED5B69 /* mute.png */,
 				9DC4D4C72154BFB400ED5B69 /* volume.png */,
+				9D478E6F2155C7DA009C798A /* insanity.png */,
+				9D478E712155CC4C009C798A /* insanity_red.png */,
 			);
 			path = Repetition;
 			sourceTree = "<group>";
@@ -146,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D478E722155CC4C009C798A /* insanity_red.png in Resources */,
 				9D81F694212DCDBD00AA5F1F /* Main.storyboard in Resources */,
 				9D81F68B212DCDBD00AA5F1F /* GameScene.sks in Resources */,
 				9D81F696212DCDBF00AA5F1F /* Assets.xcassets in Resources */,
@@ -153,6 +160,7 @@
 				9DC4D4CA2154BFBB00ED5B69 /* mute.png in Resources */,
 				9D81F699212DCDBF00AA5F1F /* LaunchScreen.storyboard in Resources */,
 				9D81F68D212DCDBD00AA5F1F /* Actions.sks in Resources */,
+				9D478E702155C7DA009C798A /* insanity.png in Resources */,
 				9DC4D4B821549BFD00ED5B69 /* music.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,7 +20,10 @@ class GameScene: SKScene {
 
     var volumeButton: SKSpriteNode!
     var muteButton: SKSpriteNode!
+    var insanityOn: SKSpriteNode!
+    var insanityOff: SKSpriteNode!
 
+    var isInsane: Bool = false
     
     var gameLogo: SKLabelNode!
     var bestScore: SKLabelNode!
@@ -55,9 +58,37 @@ class GameScene: SKScene {
     }
     
     private func initializeGameView() {
+        
+        var posY: CGFloat = 0.0
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+                case 1136:
+                    //print("iPhone 5 or 5S or 5C")
+                    posY = 61.0
+                case 1334:
+                    //print("iPhone 6/6S/7/8")
+                    posY = 61.0
+                case 1920, 2208:
+                    //print("iPhone 6+/6S+/7+/8+")
+                    posY = 61.0
+                case 2436:
+                    //print("iPhone X, Xs")
+                    posY = 71.0
+                case 2688:
+                    //print("iPhone Xs Max")
+                    posY = 71.0
+                case 1792:
+                    //print("iPhone Xr")
+                    posY = 71.0
+                default:
+                    //print("unknown")
+                    posY = 71.0
+            }
+        }
         currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         currentScore.zPosition = 1
-        currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + 61)
+        currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + posY)
         currentScore.fontSize = 41
         currentScore.isHidden = true
         currentScore.text = "Level: 1"
@@ -168,27 +199,27 @@ class GameScene: SKScene {
         
         if UIDevice().userInterfaceIdiom == .phone {
             switch UIScreen.main.nativeBounds.height {
-            case 1136:
-                //print("iPhone 5 or 5S or 5C")
-                posX = 80.0
-            case 1334:
-                //print("iPhone 6/6S/7/8")
-                posX = 80.0
-            case 1920, 2208:
-                //print("iPhone 6+/6S+/7+/8+")
-                posX = 80.0
-            case 2436:
-                //print("iPhone X, Xs")
-                posX = 140.0
-            case 2688:
-                //print("iPhone Xs Max")
-                posX = 140.0
-            case 1792:
-                //print("iPhone Xr")
-                posX = 140.0
-            default:
-                //print("unknown")
-                posX = 140.0
+                case 1136:
+                    //print("iPhone 5 or 5S or 5C")
+                    posX = 80.0
+                case 1334:
+                    //print("iPhone 6/6S/7/8")
+                    posX = 80.0
+                case 1920, 2208:
+                    //print("iPhone 6+/6S+/7+/8+")
+                    posX = 80.0
+                case 2436:
+                    //print("iPhone X, Xs")
+                    posX = 140.0
+                case 2688:
+                    //print("iPhone Xs Max")
+                    posX = 140.0
+                case 1792:
+                    //print("iPhone Xr")
+                    posX = 140.0
+                default:
+                    //print("unknown")
+                    posX = 140.0
             }
         }
         
@@ -215,6 +246,30 @@ class GameScene: SKScene {
         //muteButton.colorBlendFactor = 1.0
         muteButton.setScale(0.55)
         self.addChild(muteButton)
+        
+        let imageTexture3 = SKTexture(imageNamed: "insanity_red")
+        insanityOn = SKSpriteNode(texture: imageTexture3)
+        self.isUserInteractionEnabled = true
+        insanityOn.name = "insanity_on"
+        insanityOn.isHidden = true
+        insanityOn.zPosition = 1
+        insanityOn.position = CGPoint(x: (frame.size.width / 2) - posX, y: (frame.size.height / 2) - 101)
+        //insanityOn.color = UIColor.cyan
+        //insanityOn.colorBlendFactor = 1.0
+        insanityOn.setScale(0.704)
+        self.addChild(insanityOn)
+        
+        let imageTexture4 = SKTexture(imageNamed: "insanity")
+        insanityOff = SKSpriteNode(texture: imageTexture4)
+        self.isUserInteractionEnabled = true
+        insanityOff.name = "insanity_off"
+        insanityOff.isHidden = false
+        insanityOff.zPosition = 1
+        insanityOff.position = CGPoint(x: (frame.size.width / 2) - posX, y: (frame.size.height / 2) - 101)
+        //insanityOff.color = UIColor.cyan
+        //insanityOff.colorBlendFactor = 1.0
+        insanityOff.setScale(0.704)
+        self.addChild(insanityOff)
         
         beginGame = SKShapeNode()
         beginGame.isHidden = false
@@ -250,36 +305,53 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-                if node.name == "volume_button" || node.name == "mute_button" {
-                    if node.name == "mute_button" {
-                        volumeButton.isHidden = false
-                        muteButton.isHidden = true
-                        GameViewController.sharedHelper.startBackgroundMusic()
-                    }
-                    else {
-                        volumeButton.isHidden = true
-                        muteButton.isHidden = false
-                        GameViewController.sharedHelper.muteBackgroundMusic()
-                    }
+                if node.name == "mute_button" {
+                    volumeButton.isHidden = false
+                    muteButton.isHidden = true
+                    GameViewController.sharedHelper.startBackgroundMusic()
                 }
-                else {
+                
+                if node.name == "volume_button" {
+                    volumeButton.isHidden = true
+                    muteButton.isHidden = false
+                    GameViewController.sharedHelper.muteBackgroundMusic()
+                }
+                
+                if node.name == "insanity_on" {
+                    insanityOff.isHidden = false
+                    insanityOn.isHidden = true
+
+                    gameLogo.fontColor = SKColor.cyan
+                    beginGame.fillColor = SKColor.cyan
+                    isInsane = false
+                    self.grid.isInsane = false
+                }
+                
+                if node.name == "insanity_off" {
+                    insanityOff.isHidden = true
+                    insanityOn.isHidden = false
                     
-                    if node.name == "begin_game" {
-                        self.lastScore.isHidden = true
-                        startGame()
-                    }
-                    
-                    if node.name == "start_button" {
-                        isUserReady = true
-                        self.startButton.removeFromParent()
-                    }
-                    
-                    if node.name == "end_button" {
-                        toMenu()
-                        game.updateScore()
-                        self.endButton.removeFromParent()
-                        self.grid.box.removeFromParent()
-                    }
+                    gameLogo.fontColor = SKColor.red
+                    beginGame.fillColor = SKColor.red
+                    isInsane = true
+                    self.grid.isInsane = true
+                }
+                
+                if node.name == "begin_game" {
+                    self.lastScore.isHidden = true
+                    startGame()
+                }
+                
+                if node.name == "start_button" {
+                    isUserReady = true
+                    self.startButton.removeFromParent()
+                }
+                
+                if node.name == "end_button" {
+                    toMenu()
+                    game.updateScore()
+                    self.endButton.removeFromParent()
+                    self.grid.box.removeFromParent()
                 }
                 
             }
@@ -293,11 +365,41 @@ class GameScene: SKScene {
         }
 
         //self.instructionToStart.isHidden = true
-        
+        self.insanityOff.isHidden = true
+        self.insanityOn.isHidden = true
+
         self.beginGame.isHidden = true
         self.lastScore.isHidden = true
         
-        let bottomCorner = CGPoint(x: 0, y: (frame.size.height / -2) + 21)
+        var posY: CGFloat = 0.0
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+                case 1136:
+                    //print("iPhone 5 or 5S or 5C")
+                    posY = 21.0
+                case 1334:
+                    //print("iPhone 6/6S/7/8")
+                    posY = 21.0
+                case 1920, 2208:
+                    //print("iPhone 6+/6S+/7+/8+")
+                    posY = 21.0
+                case 2436:
+                    //print("iPhone X, Xs")
+                    posY = 31.0
+                case 2688:
+                    //print("iPhone Xs Max")
+                    posY = 31.0
+                case 1792:
+                    //print("iPhone Xr")
+                    posY = 31.0
+                default:
+                    //print("unknown")
+                    posY = 31.0
+            }
+        }
+        
+        let bottomCorner = CGPoint(x: 0, y: (frame.size.height / -2) + posY)
         bestScore.run(SKAction.move(to: bottomCorner, duration: 0.4))
         bestScore.run(SKAction.move(to: bottomCorner, duration: 0.4)) {
             self.currentScore.setScale(0)
@@ -307,6 +409,12 @@ class GameScene: SKScene {
         }
         
         userConfirmation()
+        if self.isInsane {
+            self.instructionToContinue.fontColor = SKColor.red
+        }
+        else {
+            self.instructionToContinue.fontColor = SKColor.cyan
+        }
         self.instructionToContinue.isHidden = false
         
 
@@ -339,6 +447,13 @@ class GameScene: SKScene {
                     ])
             )
             
+            if isInsane {
+                endButton.fillColor = SKColor.red
+            }
+            else {
+                endButton.fillColor = SKColor.cyan
+            }
+            
         }
         else {
             
@@ -369,6 +484,13 @@ class GameScene: SKScene {
                 )
 
             }
+            
+            if isInsane {
+                startButton.fillColor = SKColor.red
+            }
+            else {
+                startButton.fillColor = SKColor.cyan
+            }
         }
         
     }
@@ -383,7 +505,15 @@ class GameScene: SKScene {
             if count < patternLength {
                 self.instructionToContinue.isHidden = true
                 self.correct.isHidden = true
+                
+                if self.isInsane {
+                    self.instructionToWait.fontColor = SKColor.red
+                }
+                else {
+                    self.instructionToWait.fontColor = SKColor.cyan
+                }
                 self.instructionToWait.isHidden = false
+                
                 self.grid.runSimulation()
                 self.count += 1
             }
@@ -391,7 +521,15 @@ class GameScene: SKScene {
                 self.instructionToContinue.isHidden = true
                 self.correct.isHidden = true
                 self.instructionToWait.isHidden = true
+                
+                if self.isInsane {
+                    self.instructionToGo.fontColor = SKColor.red
+                }
+                else {
+                    self.instructionToGo.fontColor = SKColor.cyan
+                }
                 self.instructionToGo.isHidden = false
+                
                 self.grid.isSimulationFinished = true
             }
         }
@@ -404,6 +542,12 @@ class GameScene: SKScene {
         //self.instructionToContinue.isHidden = true
         self.instructionToMenu.isHidden = true
 
+        if isInsane {
+            self.insanityOn.isHidden = false
+        }
+        else {
+            self.insanityOff.isHidden = false
+        }
         
         self.gameLogo.isHidden = false
         self.grid.isHidden = true
