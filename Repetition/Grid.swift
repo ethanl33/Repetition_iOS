@@ -16,6 +16,8 @@ class Grid:SKSpriteNode {
     var solutionC: [Int] = []
     var guessR: [Int] = []
     var guessC: [Int] = []
+    var carbonR: [Int] = []
+    var carbonC: [Int] = []
     
     
     var rows:Int!
@@ -23,10 +25,14 @@ class Grid:SKSpriteNode {
     var count = 0
     var prevRow = -1
     var prevCol = -1
+    var num = 0
+    
     
     var isSimulationFinished = false
     var isReady = false
-    var isInsane = false
+    var isInsane: Bool = UserDefaults.standard.bool(forKey: "isInsane")
+    
+    
     var box: SKShapeNode!
     
     var gameManager = GameManager()
@@ -116,6 +122,7 @@ class Grid:SKSpriteNode {
                     let box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
                     box.isUserInteractionEnabled = true
                     box.name = "box2"
+                    box.strokeColor = SKColor.clear
                     
                     if isInsane {
                         box.fillColor = SKColor.red
@@ -152,23 +159,37 @@ class Grid:SKSpriteNode {
     }
     
     func runSimulation(){
-        let coordinate = getCoordinate()
+        
         var box: SKShapeNode!
         box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
         box.name = "box1"
+        box.lineWidth = 10
         box.fillColor = SKColor.white
         box.isHidden = true
+        num = Int(arc4random_uniform(10))
+        if num == 7 {
+            box.strokeColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
+        }
+        else {
+            box.strokeColor = SKColor.clear
+        }
+        
+        let coordinate = getCoordinate()
+    
         self.addChild(box)
         
+        //change 0.55 to a lesser value to make the simulation more difficult to see
         box.run(
             SKAction.sequence([
                 SKAction.move(to: coordinate, duration: 0.001),
                 SKAction.unhide(),
-                SKAction.wait(forDuration: 0.55),
+                SKAction.wait(forDuration: 0.50),
                 SKAction.hide(),
                 SKAction.removeFromParent()
                 ])
         )
+
+ 
         
     }
     
@@ -186,6 +207,11 @@ class Grid:SKSpriteNode {
         
         solutionR.append(row)
         solutionC.append(col)
+        
+        if num == 7 {
+            carbonR.append(row)
+            carbonC.append(col)
+        }
         
         return position
     }

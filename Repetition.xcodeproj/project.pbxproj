@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D3AEA9D2161C64100E5B9F2 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3AEA9C2161C64100E5B9F2 /* ShopScene.swift */; };
 		9D478E702155C7DA009C798A /* insanity.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D478E6F2155C7DA009C798A /* insanity.png */; };
 		9D478E722155CC4C009C798A /* insanity_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D478E712155CC4C009C798A /* insanity_red.png */; };
+		9D645A0B21DAC9FC00BA139A /* shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D645A0A21DAC9FC00BA139A /* shop.png */; };
+		9D654BB821D9E679007C6965 /* diamond.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D654BB721D9E679007C6965 /* diamond.png */; };
+		9D654BC221D9ED75007C6965 /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D654BC121D9ED75007C6965 /* volume.png */; };
+		9D654BC421D9ED7B007C6965 /* mute.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D654BC321D9ED7B007C6965 /* mute.png */; };
 		9D81F689212DCDBD00AA5F1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D81F688212DCDBD00AA5F1F /* AppDelegate.swift */; };
 		9D81F68B212DCDBD00AA5F1F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D81F68A212DCDBD00AA5F1F /* GameScene.sks */; };
-		9D81F68D212DCDBD00AA5F1F /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D81F68C212DCDBD00AA5F1F /* Actions.sks */; };
 		9D81F68F212DCDBD00AA5F1F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D81F68E212DCDBD00AA5F1F /* GameScene.swift */; };
 		9D81F691212DCDBD00AA5F1F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D81F690212DCDBD00AA5F1F /* GameViewController.swift */; };
 		9D81F694212DCDBD00AA5F1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D81F692212DCDBD00AA5F1F /* Main.storyboard */; };
@@ -20,17 +24,26 @@
 		9D81F6A1212DCE9600AA5F1F /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D81F6A0212DCE9600AA5F1F /* GameManager.swift */; };
 		9D876A472137043B00B0D3F7 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D876A462137043B00B0D3F7 /* Grid.swift */; };
 		9DC4D4B821549BFD00ED5B69 /* music.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9DC4D4B721549BFD00ED5B69 /* music.wav */; };
-		9DC4D4C82154BFB400ED5B69 /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC4D4C72154BFB400ED5B69 /* volume.png */; };
-		9DC4D4CA2154BFBB00ED5B69 /* mute.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DC4D4C92154BFBB00ED5B69 /* mute.png */; };
+		9DDBA4BE21632737004B5B6D /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DDBA4BD21632737004B5B6D /* back.png */; };
+		9DF0FAFE21D864960065DE0F /* ShopScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9DF0FAFD21D864960065DE0F /* ShopScene.sks */; };
+		9DF0FB0021D864A20065DE0F /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9DF0FAFF21D864A20065DE0F /* Actions.sks */; };
+		9DF4987B21DC5D44001B595B /* double.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4987A21DC5D44001B595B /* double.png */; };
+		9DF4987F21DC6668001B595B /* redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4987E21DC6667001B595B /* redo.png */; };
+		9DF4988121DC7B1B001B595B /* magnifying_glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4988021DC7B1B001B595B /* magnifying_glass.png */; };
+		9DF4988321DC7F87001B595B /* last_resort.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4988221DC7F86001B595B /* last_resort.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9D3AEA9C2161C64100E5B9F2 /* ShopScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
 		9D478E6F2155C7DA009C798A /* insanity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insanity.png; sourceTree = "<group>"; };
 		9D478E712155CC4C009C798A /* insanity_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insanity_red.png; sourceTree = "<group>"; };
+		9D645A0A21DAC9FC00BA139A /* shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shop.png; sourceTree = "<group>"; };
+		9D654BB721D9E679007C6965 /* diamond.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamond.png; sourceTree = "<group>"; };
+		9D654BC121D9ED75007C6965 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volume.png; sourceTree = "<group>"; };
+		9D654BC321D9ED7B007C6965 /* mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute.png; sourceTree = "<group>"; };
 		9D81F685212DCDBD00AA5F1F /* Repetition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repetition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D81F688212DCDBD00AA5F1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D81F68A212DCDBD00AA5F1F /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		9D81F68C212DCDBD00AA5F1F /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		9D81F68E212DCDBD00AA5F1F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		9D81F690212DCDBD00AA5F1F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		9D81F693212DCDBD00AA5F1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,8 +53,13 @@
 		9D81F6A0212DCE9600AA5F1F /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		9D876A462137043B00B0D3F7 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		9DC4D4B721549BFD00ED5B69 /* music.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = music.wav; sourceTree = "<group>"; };
-		9DC4D4C72154BFB400ED5B69 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = volume.png; path = ../../../Downloads/volume.png; sourceTree = "<group>"; };
-		9DC4D4C92154BFBB00ED5B69 /* mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mute.png; path = ../../../Downloads/mute.png; sourceTree = "<group>"; };
+		9DDBA4BD21632737004B5B6D /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		9DF0FAFD21D864960065DE0F /* ShopScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShopScene.sks; sourceTree = "<group>"; };
+		9DF0FAFF21D864A20065DE0F /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		9DF4987A21DC5D44001B595B /* double.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = double.png; sourceTree = "<group>"; };
+		9DF4987E21DC6667001B595B /* redo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redo.png; sourceTree = "<group>"; };
+		9DF4988021DC7B1B001B595B /* magnifying_glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = magnifying_glass.png; sourceTree = "<group>"; };
+		9DF4988221DC7F86001B595B /* last_resort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = last_resort.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,22 +92,31 @@
 		9D81F687212DCDBD00AA5F1F /* Repetition */ = {
 			isa = PBXGroup;
 			children = (
-				9D81F688212DCDBD00AA5F1F /* AppDelegate.swift */,
-				9D81F68A212DCDBD00AA5F1F /* GameScene.sks */,
-				9D81F68C212DCDBD00AA5F1F /* Actions.sks */,
-				9D81F690212DCDBD00AA5F1F /* GameViewController.swift */,
-				9D81F692212DCDBD00AA5F1F /* Main.storyboard */,
 				9D81F695212DCDBF00AA5F1F /* Assets.xcassets */,
+				9D81F692212DCDBD00AA5F1F /* Main.storyboard */,
 				9D81F697212DCDBF00AA5F1F /* LaunchScreen.storyboard */,
-				9D81F69A212DCDBF00AA5F1F /* Info.plist */,
-				9D81F6A0212DCE9600AA5F1F /* GameManager.swift */,
+				9D81F68A212DCDBD00AA5F1F /* GameScene.sks */,
+				9DF0FAFF21D864A20065DE0F /* Actions.sks */,
+				9DF0FAFD21D864960065DE0F /* ShopScene.sks */,
+				9D81F688212DCDBD00AA5F1F /* AppDelegate.swift */,
+				9D81F690212DCDBD00AA5F1F /* GameViewController.swift */,
+				9D3AEA9C2161C64100E5B9F2 /* ShopScene.swift */,
 				9D81F68E212DCDBD00AA5F1F /* GameScene.swift */,
+				9D81F6A0212DCE9600AA5F1F /* GameManager.swift */,
 				9D876A462137043B00B0D3F7 /* Grid.swift */,
-				9DC4D4B721549BFD00ED5B69 /* music.wav */,
-				9DC4D4C92154BFBB00ED5B69 /* mute.png */,
-				9DC4D4C72154BFB400ED5B69 /* volume.png */,
+				9D81F69A212DCDBF00AA5F1F /* Info.plist */,
+				9D654BB721D9E679007C6965 /* diamond.png */,
 				9D478E6F2155C7DA009C798A /* insanity.png */,
 				9D478E712155CC4C009C798A /* insanity_red.png */,
+				9D654BC121D9ED75007C6965 /* volume.png */,
+				9D654BC321D9ED7B007C6965 /* mute.png */,
+				9D645A0A21DAC9FC00BA139A /* shop.png */,
+				9DF4988021DC7B1B001B595B /* magnifying_glass.png */,
+				9DDBA4BD21632737004B5B6D /* back.png */,
+				9DF4988221DC7F86001B595B /* last_resort.png */,
+				9DF4987A21DC5D44001B595B /* double.png */,
+				9DF4987E21DC6667001B595B /* redo.png */,
+				9DC4D4B721549BFD00ED5B69 /* music.wav */,
 			);
 			path = Repetition;
 			sourceTree = "<group>";
@@ -126,6 +153,7 @@
 				TargetAttributes = {
 					9D81F684212DCDBD00AA5F1F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -152,16 +180,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D654BC421D9ED7B007C6965 /* mute.png in Resources */,
 				9D478E722155CC4C009C798A /* insanity_red.png in Resources */,
 				9D81F694212DCDBD00AA5F1F /* Main.storyboard in Resources */,
 				9D81F68B212DCDBD00AA5F1F /* GameScene.sks in Resources */,
 				9D81F696212DCDBF00AA5F1F /* Assets.xcassets in Resources */,
-				9DC4D4C82154BFB400ED5B69 /* volume.png in Resources */,
-				9DC4D4CA2154BFBB00ED5B69 /* mute.png in Resources */,
+				9D654BC221D9ED75007C6965 /* volume.png in Resources */,
+				9DF0FAFE21D864960065DE0F /* ShopScene.sks in Resources */,
+				9D654BB821D9E679007C6965 /* diamond.png in Resources */,
+				9DF4987B21DC5D44001B595B /* double.png in Resources */,
+				9DDBA4BE21632737004B5B6D /* back.png in Resources */,
+				9DF0FB0021D864A20065DE0F /* Actions.sks in Resources */,
+				9D645A0B21DAC9FC00BA139A /* shop.png in Resources */,
 				9D81F699212DCDBF00AA5F1F /* LaunchScreen.storyboard in Resources */,
-				9D81F68D212DCDBD00AA5F1F /* Actions.sks in Resources */,
+				9DF4987F21DC6668001B595B /* redo.png in Resources */,
 				9D478E702155C7DA009C798A /* insanity.png in Resources */,
 				9DC4D4B821549BFD00ED5B69 /* music.wav in Resources */,
+				9DF4988121DC7B1B001B595B /* magnifying_glass.png in Resources */,
+				9DF4988321DC7F87001B595B /* last_resort.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D3AEA9D2161C64100E5B9F2 /* ShopScene.swift in Sources */,
 				9D81F68F212DCDBD00AA5F1F /* GameScene.swift in Sources */,
 				9D81F6A1212DCE9600AA5F1F /* GameManager.swift in Sources */,
 				9D81F691212DCDBD00AA5F1F /* GameViewController.swift in Sources */,
@@ -332,7 +369,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ethanl33.Repetition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = RepetitionDevelopmentProfile;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -353,7 +390,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ethanl33.Repetition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = RepetitionDistributionProfile;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

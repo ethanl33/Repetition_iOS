@@ -40,6 +40,11 @@ class GameViewController: UIViewController {
         
     }
     
+    func musicIsPlaying() -> Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+    
+    
     
     
 

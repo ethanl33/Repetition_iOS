@@ -13,7 +13,7 @@ class GameManager {
     var scene: GameScene!
     
     var nextTime: Double?
-    var timeExtension: Double = 0.5 //change this value to make game slower or faster
+    var timeExtension: Double = 0.50 //change 0.50 to make game slower or faster
     
     var currentScore: Int = 1
     var lastScore: Int = 1
@@ -49,6 +49,7 @@ class GameManager {
             if scene.nextLevel == true {
                 currentScore += 1
                 self.scene.currentScore.text = "Level: \(currentScore)"
+                self.scene.carbonLabel.text = "\(scene.carbonPoint)"
                 self.scene.userConfirmation()
                 self.scene.isUserReady = false
                 self.scene.count = 0
@@ -97,6 +98,8 @@ class GameManager {
     
     func updateScore() {
         UserDefaults.standard.set(currentScore, forKey: "lastScore")
+        UserDefaults.standard.set(scene.carbonPoint, forKey: "carbonPoint")
+        
         self.scene.lastScore.text = "Last: \(UserDefaults.standard.integer(forKey: "lastScore"))"
 
         if currentScore > UserDefaults.standard.integer(forKey: "bestScore") {
@@ -105,8 +108,8 @@ class GameManager {
         
         currentScore = 1
         self.scene.currentScore.text = "Level: 1"
-        self.scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
         
+        self.scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
     }
     
 

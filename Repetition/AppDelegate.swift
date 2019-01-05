@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         let defaults = UserDefaults.standard
@@ -24,6 +24,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults2 = UserDefaults.standard
         let defaultValue2 = ["lastScore" : 1]
         defaults2.register(defaults: defaultValue2)
+        
+        let defaults3 = UserDefaults.standard
+        let defaultValue3 = ["carbonPoint" : 0]
+        defaults3.register(defaults: defaultValue3)
+        
+        let defaults4 = UserDefaults.standard
+        let defaultValue4 = ["isInsane" : false]
+        defaults4.register(defaults: defaultValue4)
+        
+        let defaults5 = UserDefaults.standard
+        let defaultValue5 = ["isMute" : true]
+        defaults5.register(defaults: defaultValue5)
+        
+        let defaults6 = UserDefaults.standard
+        let defaultValue6 = ["selectedPowerUp" : 0]
+        defaults6.register(defaults: defaultValue6)
+        
+        let d1 = UserDefaults.standard
+        let dv1 = ["item1isUnlocked" : false]
+        d1.register(defaults: dv1)
+        
+        let d2 = UserDefaults.standard
+        let dv2 = ["item2isUnlocked" : false]
+        d2.register(defaults: dv2)
+        
+        let d3 = UserDefaults.standard
+        let dv3 = ["item3isUnlocked" : false]
+        d3.register(defaults: dv3)
+        
+        let d4 = UserDefaults.standard
+        let dv4 = ["item4isUnlocked" : false]
+        d4.register(defaults: dv4)
+        
+        let d5 = UserDefaults.standard
+        let dv5 = ["item5isUnlocked" : false]
+        d5.register(defaults: dv5)
+        
+        let d6 = UserDefaults.standard
+        let dv6 = ["item6isUnlocked" : false]
+        d6.register(defaults: dv6)
+        
+        let d7 = UserDefaults.standard
+        let dv7 = ["item7isUnlocked" : false]
+        d7.register(defaults: dv7)
+        
+        let d8 = UserDefaults.standard
+        let dv8 = ["item8isUnlocked" : false]
+        d8.register(defaults: dv8)
+        
+        let d9 = UserDefaults.standard
+        let dv9 = ["item9isUnlocked" : false]
+        d9.register(defaults: dv9)
+        
+        let d10 = UserDefaults.standard
+        let dv10 = ["item10isUnlocked" : false]
+        d10.register(defaults: dv10)
 
         
         return true
