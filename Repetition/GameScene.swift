@@ -9,15 +9,16 @@
 import SpriteKit
 import GameplayKit
 
-//fix code so when insanity is on, it stays on after coming from shop scene
 class GameScene: SKScene {
     
     
     var beginGame: SKShapeNode!
     var startLevel: SKShapeNode!
     var startButton: SKShapeNode!
-    var endButton: SKShapeNode!
+    var endButton: SKSpriteNode!
+    var endButtonInsanity: SKSpriteNode!
     var touchToStart: SKShapeNode!
+    var skipLevel: SKShapeNode!
 
     var volumeButton: SKSpriteNode!
     var muteButton: SKSpriteNode!
@@ -26,6 +27,7 @@ class GameScene: SKScene {
     var shopButton: SKSpriteNode!
     var carbon: SKSpriteNode!
     var powerUp: SKSpriteNode!
+    var activatedPowerUp: SKSpriteNode!
 
     var isInsane: Bool = UserDefaults.standard.bool(forKey: "isInsane")
     var isMute: Bool = UserDefaults.standard.bool(forKey: "isMute")
@@ -47,14 +49,21 @@ class GameScene: SKScene {
     
     var correctRow: Int!
     var correctCol: Int!
+    var incorrectRow: Int!
+    var incorrectCol: Int!
 
     var grid: Grid!
     var isUserReady = false
     var nextLevel = false
     var gameOver = false
+    var hasSkippedLevel = false
+    var mustSkipLevel = false
+    var mustHideSkip = false
     var count: Int = 0
     var patternLength: Int = 1
     var carbonPoint: Int = UserDefaults.standard.integer(forKey: "carbonPoint")
+    var selectedPowerUp: Int = UserDefaults.standard.integer(forKey: "selectedPowerUp")
+
 
     
     override func didMove(to view: SKView) {
@@ -92,6 +101,7 @@ class GameScene: SKScene {
                     posY = 71.0
             }
         }
+        
         currentScore = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         currentScore.zPosition = 1
         currentScore.position = CGPoint(x: 0, y: (frame.size.height / -2) + posY)
@@ -100,11 +110,23 @@ class GameScene: SKScene {
         currentScore.text = "Level: 1"
         currentScore.fontColor = SKColor.white
         self.addChild(currentScore)
+        
+        if selectedPowerUp == 2 {
+            patternLength = 3
+            currentScore.text = "Level: 5"
+            game.currentScore = 5
+        }
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         game.update(time: currentTime)
+        
+        if !grid.guessC.isEmpty && !grid.guessR.isEmpty {
+            //skipLevel.isHidden = true
+            mustHideSkip = true
+        }
     }
     
     private func initializeMenu() {
@@ -162,6 +184,7 @@ class GameScene: SKScene {
         touchToStart.name = "touch_to_start"
         self.addChild(touchToStart)
         
+        
         instructionToWait = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         instructionToWait.zPosition = 1
         instructionToWait.position = CGPoint(x: 0, y: (frame.size.height / 2) - 201)
@@ -218,7 +241,23 @@ class GameScene: SKScene {
         insanityTeaser.fontColor = SKColor.red
         insanityTeaser.isHidden = false
         self.addChild(insanityTeaser)
- 
+        /*
+        skipLevel = SKShapeNode()
+        skipLevel.name = "skip_level"
+        skipLevel.strokeColor = SKColor.clear
+        skipLevel.isHidden = true
+        skipLevel.zPosition = 1
+        skipLevel.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
+        skipLevel.fillColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
+        let t = CGPoint(x: -52, y: 52)
+        let b = CGPoint(x: -52, y: -52)
+        let m = CGPoint(x: 52, y: 0)
+        let p = CGMutablePath()
+        p.addLine(to: t)
+        p.addLines(between: [t, b, m])
+        self.skipLevel.path = p
+        self.addChild(skipLevel)
+ */
         var posX: CGFloat = 0.0
         var squareX: CGFloat = 0.0
         
@@ -359,6 +398,24 @@ class GameScene: SKScene {
         carbon.position = CGPoint(x: carbonLabel.frame.maxX + 37, y: (frame.size.height / 2) - 101)
         self.addChild(carbon)
         
+        let imageTexture7 = SKTexture(imageNamed: "home")
+        endButton = SKSpriteNode(texture: imageTexture7)
+        endButton.isHidden = true
+        endButton.name = "end_button"
+        endButton.zPosition = 1
+        endButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
+        //endButton.setScale(1.3)
+        self.addChild(endButton)
+        
+        let imageTexture8 = SKTexture(imageNamed: "home_insanity")
+        endButtonInsanity = SKSpriteNode(texture: imageTexture8)
+        endButtonInsanity.isHidden = true
+        endButtonInsanity.name = "end_button"
+        endButtonInsanity.zPosition = 1
+        endButtonInsanity.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
+        //endButtonInsanity.setScale(1.3)
+        self.addChild(endButtonInsanity)
+        
         instructionToStart = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         instructionToStart.zPosition = 1
         instructionToStart.position = CGPoint(x: 0, y: shopButton.position.y + 101)
@@ -378,28 +435,42 @@ class GameScene: SKScene {
             
         }
         
-        let selectedPowerUp: Int = UserDefaults.standard.integer(forKey: "selectedPowerUp")
+        selectedPowerUp = UserDefaults.standard.integer(forKey: "selectedPowerUp")
         var i: SKTexture
+        var ii: SKTexture
         if selectedPowerUp != 0 {
             if selectedPowerUp == 1 {
                 i = SKTexture(imageNamed: "double")
                 powerUp = SKSpriteNode(texture: i)
+                ii = SKTexture(imageNamed: "double_activated")
+                activatedPowerUp = SKSpriteNode(texture: ii)
             }
             else if selectedPowerUp == 2 {
-                i = SKTexture(imageNamed: "redo")
+                i = SKTexture(imageNamed: "run")
                 powerUp = SKSpriteNode(texture: i)
+                ii = SKTexture(imageNamed: "run_activated")
+                activatedPowerUp = SKSpriteNode(texture: ii)
             }
             else if selectedPowerUp == 3 {
-                i = SKTexture(imageNamed: "magnifying_glass")
+                i = SKTexture(imageNamed: "escape")
                 powerUp = SKSpriteNode(texture: i)
+                ii = SKTexture(imageNamed: "escape_activated")
+                activatedPowerUp = SKSpriteNode(texture: ii)
             }
             else if selectedPowerUp == 4 {
-                i = SKTexture(imageNamed: "last_resort")
+                i = SKTexture(imageNamed: "clover")
                 powerUp = SKSpriteNode(texture: i)
+                ii = SKTexture(imageNamed: "clover_activated")
+                activatedPowerUp = SKSpriteNode(texture: ii)
             }
+            powerUp.name = "power_up"
             powerUp.position = CGPoint(x: volumeButton.position.x - 25, y: carbon.position.y)
             powerUp.isHidden = false
             self.addChild(powerUp)
+            
+            activatedPowerUp.position = CGPoint(x: volumeButton.position.x - 25, y: carbon.position.y)
+            activatedPowerUp.isHidden = true
+            self.addChild(activatedPowerUp)
         }
         
     }
@@ -469,14 +540,59 @@ class GameScene: SKScene {
                 
                 if node.name == "start_button" {
                     isUserReady = true
+                    if selectedPowerUp != 0 {
+                        if selectedPowerUp == 1 || selectedPowerUp == 2 || selectedPowerUp == 4 {
+                            powerUp.isHidden = true
+                            activatedPowerUp.isHidden = false
+                        }
+                    }
                     self.startButton.removeFromParent()
                 }
-                
+                /*
+                if node.name == "skip_level" {
+                    print("test")
+                    self.mustSkipLevel = true
+                    self.skipLevel.isHidden = true
+                    self.hasSkippedLevel = true
+                    
+                    self.grid.solutionR.removeAll()
+                    self.grid.solutionC.removeAll()
+                    self.grid.guessR.removeAll()
+                    self.grid.guessC.removeAll()
+                    self.grid.carbonR.removeAll()
+                    self.grid.carbonC.removeAll()
+                    self.nextLevel = true
+                }
+ */
                 if node.name == "end_button" {
                     toMenu()
                     game.updateScore()
-                    self.endButton.removeFromParent()
+                    endButton.isHidden = true
+                    endButtonInsanity.isHidden = true
                     self.grid.box.removeFromParent()
+                    
+                    if selectedPowerUp != 0 {
+                        activatedPowerUp.isHidden = true
+                        powerUp.isHidden = false
+                    }
+                }
+                
+                if node.name == "power_up" {
+                    if selectedPowerUp == 3 {
+                        powerUp.isHidden = true
+                        activatedPowerUp.isHidden = false
+                        self.mustSkipLevel = true
+                        //self.skipLevel.isHidden = true
+                        self.hasSkippedLevel = true
+                        
+                        self.grid.solutionR.removeAll()
+                        self.grid.solutionC.removeAll()
+                        self.grid.guessR.removeAll()
+                        self.grid.guessC.removeAll()
+                        self.grid.carbonR.removeAll()
+                        self.grid.carbonC.removeAll()
+                        self.nextLevel = true
+                    }
                 }
                 
                 if node.name == "shop_button" {
@@ -564,35 +680,28 @@ class GameScene: SKScene {
     func userConfirmation() {
         //Create start button
         if gameOver == true {
-            endButton = SKShapeNode()
-            endButton.name = "end_button"
-            endButton.strokeColor = SKColor.clear
-            endButton.isHidden = true
-            endButton.zPosition = 1
-            endButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
-            endButton.fillColor = SKColor.cyan
-            let t = CGPoint(x: -52, y: 52)
-            let b = CGPoint(x: -52, y: -52)
-            let m = CGPoint(x: 52, y: 0)
-            let p = CGMutablePath()
-            p.addLine(to: t)
-            p.addLines(between: [t, b, m])
-            self.endButton.path = p
-            self.addChild(endButton)
-            
-            self.endButton.run(
-                SKAction.sequence([
-                    SKAction.wait(forDuration: 0.47),
-                    SKAction.unhide()
-                    ])
-            )
             
             if isInsane {
-                endButton.fillColor = SKColor.red
+                endButtonInsanity.isHidden = false
+                self.endButtonInsanity.run(
+                    SKAction.sequence([
+                        SKAction.wait(forDuration: 0.47),
+                        SKAction.unhide()
+                        ])
+                )
             }
             else {
-                endButton.fillColor = SKColor.cyan
+                endButton.isHidden = false
+                self.endButton.run(
+                    SKAction.sequence([
+                        SKAction.wait(forDuration: 0.47),
+                        SKAction.unhide()
+                        ])
+                )
             }
+            
+            self.hasSkippedLevel = false
+            
             
         }
         else {
@@ -654,6 +763,8 @@ class GameScene: SKScene {
                 }
                 self.instructionToWait.isHidden = false
                 
+                mustHideSkip = false
+                
                 self.grid.runSimulation()
                 self.count += 1
             }
@@ -669,7 +780,16 @@ class GameScene: SKScene {
                     self.instructionToGo.fontColor = SKColor.cyan
                 }
                 self.instructionToGo.isHidden = false
-                
+                /*
+                if mustSkipLevel || mustHideSkip {
+                    skipLevel.isHidden = true
+                }
+                else {
+                    if selectedPowerUp == 3 && !hasSkippedLevel {
+                        skipLevel.isHidden = false
+                    }
+                }
+    */
                 self.grid.isSimulationFinished = true
             }
         }
@@ -681,6 +801,7 @@ class GameScene: SKScene {
         }
         //self.instructionToContinue.isHidden = true
         self.instructionToMenu.isHidden = true
+        self.grid.hideFingerprint()
 
         if isInsane {
             self.insanityOn.isHidden = false
@@ -725,7 +846,12 @@ class GameScene: SKScene {
                     if grid.carbonR[0] == grid.guessR[0] && grid.carbonC[0] == grid.guessC[0] {
                         self.grid.carbonR.remove(at: 0)
                         self.grid.carbonC.remove(at: 0)
-                        carbonPoint += 1
+                        if selectedPowerUp == 1 {
+                            carbonPoint += 2
+                        }
+                        else {
+                            carbonPoint += 1
+                        }
                     }
                 }
                 self.grid.solutionR.remove(at: 0)
@@ -745,6 +871,8 @@ class GameScene: SKScene {
             else {
                 self.correctRow = grid.solutionR[0]
                 self.correctCol = grid.solutionC[0]
+                self.incorrectRow = grid.guessR[0]
+                self.incorrectCol = grid.guessC[0]
                 
                 self.grid.solutionR.removeAll()
                 self.grid.solutionC.removeAll()
@@ -758,7 +886,20 @@ class GameScene: SKScene {
             }
         }
         return false
-        
+    }
+    
+    func skipCurrentLevel() {
+        if mustSkipLevel {
+            self.hasSkippedLevel = true
+            self.grid.solutionR.removeAll()
+            self.grid.solutionC.removeAll()
+            self.grid.guessR.removeAll()
+            self.grid.guessC.removeAll()
+            self.grid.carbonR.removeAll()
+            self.grid.carbonC.removeAll()
+            self.nextLevel = true
+            self.mustSkipLevel = false
+        }
     }
     
 }

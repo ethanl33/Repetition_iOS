@@ -22,7 +22,6 @@ class Grid:SKSpriteNode {
     
     var rows:Int!
     var cols:Int!
-    var count = 0
     var prevRow = -1
     var prevCol = -1
     var num = 0
@@ -31,6 +30,8 @@ class Grid:SKSpriteNode {
     var isSimulationFinished = false
     var isReady = false
     var isInsane: Bool = UserDefaults.standard.bool(forKey: "isInsane")
+    
+    var fingerprint: SKSpriteNode!
     
     
     var box: SKShapeNode!
@@ -48,6 +49,10 @@ class Grid:SKSpriteNode {
         self.rows = rows
         self.cols = cols
         
+        let imageTexture = SKTexture(imageNamed: "fingerprint")
+        fingerprint = SKSpriteNode(texture: imageTexture)
+        fingerprint.isHidden = true
+        self.addChild(fingerprint)
         
         self.isUserInteractionEnabled = true
     }
@@ -99,6 +104,7 @@ class Grid:SKSpriteNode {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isSimulationFinished == true {
             for touch in touches {
+                                
                 let position = touch.location(in:self)
                 let node = atPoint(position)
                 
@@ -107,6 +113,8 @@ class Grid:SKSpriteNode {
                     node.run(action)
                 }
                 else {
+                
+                    
                     let y = size.width / 2 + position.x
                     let x = size.height / 2 - position.y
                     let row = Int(floor(x / blockSize))
@@ -115,13 +123,11 @@ class Grid:SKSpriteNode {
                     
                     guessR.append(row)
                     guessC.append(col)
-
-                    count += 1
                     
                     
                     let box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
                     box.isUserInteractionEnabled = true
-                    box.name = "box2"
+                    box.name = "box"
                     box.strokeColor = SKColor.clear
                     
                     if isInsane {
@@ -150,7 +156,6 @@ class Grid:SKSpriteNode {
     
     func showSolution(row: Int, col: Int) {
         box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
-        box.name = "box3"
         box.fillColor = SKColor.clear
         box.strokeColor = SKColor.green
         box.lineWidth = 10
@@ -158,16 +163,29 @@ class Grid:SKSpriteNode {
         self.addChild(box)
     }
     
+    func showIncorrectGuess(row: Int, col: Int) {
+        fingerprint.position = gridPosition(row: row, col: col)
+        fingerprint.isHidden = false
+    }
+    
+    func hideFingerprint() {
+        fingerprint.isHidden = true
+    }
+    
     func runSimulation(){
         
         var box: SKShapeNode!
         box = SKShapeNode(rectOf: CGSize(width: blockSize, height: blockSize))
-        box.name = "box1"
         box.lineWidth = 10
         box.fillColor = SKColor.white
         box.isHidden = true
-        num = Int(arc4random_uniform(10))
-        if num == 7 {
+        if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 4 {
+            num = Int(arc4random_uniform(5))
+        }
+        else {
+            num = Int(arc4random_uniform(10))
+        }
+        if num == 2 {
             box.strokeColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
         }
         else {
@@ -190,6 +208,10 @@ class Grid:SKSpriteNode {
         )
 
  
+        
+    }
+    
+    func replaySimulation() {
         
     }
     

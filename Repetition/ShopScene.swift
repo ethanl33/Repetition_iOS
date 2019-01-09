@@ -154,7 +154,7 @@ class ShopScene: SKScene {
                             item2Label.isHidden = true
                             item2Carbon.isHidden = true
                             item2.strokeColor = SKColor.cyan
-                            info.text = "Replay Simulation"
+                            info.text = "Head Start"
                             UserDefaults.standard.set(2, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item2isUnlocked")
                             deselectOtherBoxes(num: 2)
@@ -167,7 +167,7 @@ class ShopScene: SKScene {
                     }
                     else {
                         item2.strokeColor = SKColor.cyan
-                        info.text = "Replay Simulation"
+                        info.text = "Head Start"
                         UserDefaults.standard.set(2, forKey: "selectedPowerUp")
                         deselectOtherBoxes(num: 2)
                     }
@@ -190,7 +190,7 @@ class ShopScene: SKScene {
                             item3Label.isHidden = true
                             item3Carbon.isHidden = true
                             item3.strokeColor = SKColor.cyan
-                            info.text = "Reveal Next Coordinate"
+                            info.text = "Skip A Level"
                             UserDefaults.standard.set(3, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item3isUnlocked")
                             deselectOtherBoxes(num: 3)
@@ -203,7 +203,7 @@ class ShopScene: SKScene {
                     }
                     else {
                         item3.strokeColor = SKColor.cyan
-                        info.text = "Reveal Next Coordinate"
+                        info.text = "Skip A Level"
                         UserDefaults.standard.set(3, forKey: "selectedPowerUp")
                         deselectOtherBoxes(num: 3)
                     }
@@ -225,7 +225,7 @@ class ShopScene: SKScene {
                             item4Label.isHidden = true
                             item4Carbon.isHidden = true
                             item4.strokeColor = SKColor.cyan
-                            info.text = "Last Resort"
+                            info.text = "Increase Carbon Luck"
                             UserDefaults.standard.set(4, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item4isUnlocked")
                             deselectOtherBoxes(num: 4)
@@ -238,7 +238,7 @@ class ShopScene: SKScene {
                     }
                     else {
                         item4.strokeColor = SKColor.cyan
-                        info.text = "Last Resort"
+                        info.text = "Increase Carbon Luck"
                         UserDefaults.standard.set(4, forKey: "selectedPowerUp")
                         deselectOtherBoxes(num: 4)
                     }
@@ -667,7 +667,7 @@ class ShopScene: SKScene {
         item2Carbon.setScale(0.7)
         self.addChild(item2Carbon)
         
-        let i3 = SKTexture(imageNamed: "redo")
+        let i3 = SKTexture(imageNamed: "run")
         item2Picture = SKSpriteNode(texture: i3)
         item2Picture.name = "item2"
         item2Picture.position = CGPoint(x: item2.position.x, y: (frame.size.height / 4))
@@ -697,7 +697,7 @@ class ShopScene: SKScene {
         item3Carbon.setScale(0.7)
         self.addChild(item3Carbon)
         
-        let i4 = SKTexture(imageNamed: "magnifying_glass")
+        let i4 = SKTexture(imageNamed: "escape")
         item3Picture = SKSpriteNode(texture: i4)
         item3Picture.name = "item3"
         item3Picture.position = CGPoint(x: item3.position.x, y: item3.position.y)
@@ -727,7 +727,7 @@ class ShopScene: SKScene {
         item4Carbon.setScale(0.7)
         self.addChild(item4Carbon)
         
-        let i5 = SKTexture(imageNamed: "last_resort")
+        let i5 = SKTexture(imageNamed: "clover")
         item4Picture = SKSpriteNode(texture: i5)
         item4Picture.name = "item4"
         item4Picture.position = CGPoint(x: item4.position.x, y: item4.position.y)

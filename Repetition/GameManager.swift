@@ -18,10 +18,13 @@ class GameManager {
     var currentScore: Int = 1
     var lastScore: Int = 1
     
+    
+    
     var isSimulationFinished = false
 
     init(scene: GameScene) {
         self.scene = scene
+        
     }
     
     init() {
@@ -44,9 +47,11 @@ class GameManager {
     }
     
     private func checkForScore() {
+        
         self.scene.currentScore.text = "Level: \(currentScore)"
-        if scene.checkForScore() == true {
+        if scene.checkForScore() == true || scene.mustSkipLevel {
             if scene.nextLevel == true {
+               
                 currentScore += 1
                 self.scene.currentScore.text = "Level: \(currentScore)"
                 self.scene.carbonLabel.text = "\(scene.carbonPoint)"
@@ -58,11 +63,21 @@ class GameManager {
                 
                 if self.scene.isInsane {
                     self.scene.correct.fontColor = SKColor.red
+                    self.scene.correct.text = "Correct"
+                }
+                else if self.scene.mustSkipLevel {
+                    self.scene.correct.fontColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
+                    self.scene.correct.text = "Skipped Level"
                 }
                 else {
                     self.scene.correct.fontColor = SKColor.cyan
+                    self.scene.correct.text = "Correct"
                 }
                 self.scene.correct.isHidden = false
+                
+                if scene.selectedPowerUp == 3 {
+                    scene.mustSkipLevel = false
+                }
 
                 self.scene.nextLevel = false
                 //self.scene.instructionToContinue.isHidden = false
@@ -76,6 +91,7 @@ class GameManager {
                 self.scene.grid.isSimulationFinished = false
                 
                 self.scene.grid.showSolution(row: scene.correctRow, col: scene.correctCol)
+                self.scene.grid.showIncorrectGuess(row: scene.incorrectRow, col: scene.incorrectCol)
                 
                 self.scene.userConfirmation()
                 self.scene.instructionToContinue.isHidden = true
@@ -96,6 +112,9 @@ class GameManager {
         
     }
     
+    private func checkForSkip() {
+    }
+    
     func updateScore() {
         UserDefaults.standard.set(currentScore, forKey: "lastScore")
         UserDefaults.standard.set(scene.carbonPoint, forKey: "carbonPoint")
@@ -106,8 +125,19 @@ class GameManager {
             UserDefaults.standard.set(currentScore, forKey: "bestScore")
         }
         
-        currentScore = 1
-        self.scene.currentScore.text = "Level: 1"
+        if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 2 {
+            self.scene.currentScore.text = "Level: 5"
+        }
+        else {
+            self.scene.currentScore.text = "Level: 1"
+        }
+        
+        if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 2 {
+            currentScore = 5
+        }
+        else {
+            currentScore = 1
+        }
         
         self.scene.bestScore.text = "Best Score: \(UserDefaults.standard.integer(forKey: "bestScore"))"
     }
