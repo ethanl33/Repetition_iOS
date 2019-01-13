@@ -67,7 +67,7 @@ class GameManager {
                 }
                 else if self.scene.mustSkipLevel {
                     self.scene.correct.fontColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
-                    self.scene.correct.text = "Skipped Level"
+                    self.scene.correct.text = "Skip A Level"
                 }
                 else {
                     self.scene.correct.fontColor = SKColor.cyan
@@ -85,6 +85,9 @@ class GameManager {
             }
             if scene.gameOver == true {
                 //print("Game Over")
+                if scene.selectedPowerUp == 4 {
+                    currentScore += 3
+                }
                 self.scene.isUserReady = false
                 self.scene.count = 0
                 self.scene.patternLength = 1
@@ -98,11 +101,21 @@ class GameManager {
                 self.scene.instructionToWait.isHidden = true
                 self.scene.instructionToGo.isHidden = true
                 
-                if self.scene.isInsane {
-                    self.scene.instructionToMenu.fontColor = SKColor.red
+                if scene.selectedPowerUp == 4 {
+                    self.scene.instructionToMenu.fontColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
+                    self.scene.instructionToMenu.text = "Postmortem Boost"
+                    self.scene.powerUp.isHidden = true
+                    self.scene.activatedPowerUp.isHidden = false
                 }
                 else {
-                    self.scene.instructionToMenu.fontColor = SKColor.cyan
+                    if self.scene.isInsane {
+                        self.scene.instructionToMenu.text = "Incorrect: Correction Highlighted"
+                        self.scene.instructionToMenu.fontColor = SKColor.red
+                    }
+                    else {
+                        self.scene.instructionToMenu.text = "Incorrect: Correction Highlighted"
+                        self.scene.instructionToMenu.fontColor = SKColor.cyan
+                    }
                 }
                 self.scene.instructionToMenu.isHidden = false
                 

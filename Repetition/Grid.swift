@@ -179,12 +179,7 @@ class Grid:SKSpriteNode {
         box.lineWidth = 10
         box.fillColor = SKColor.white
         box.isHidden = true
-        if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 4 {
-            num = Int(arc4random_uniform(5))
-        }
-        else {
-            num = Int(arc4random_uniform(10))
-        }
+        num = Int(arc4random_uniform(10))
         if num == 2 {
             box.strokeColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
         }

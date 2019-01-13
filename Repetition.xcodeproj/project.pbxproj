@@ -34,6 +34,8 @@
 		9D81F699212DCDBF00AA5F1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D81F697212DCDBF00AA5F1F /* LaunchScreen.storyboard */; };
 		9D81F6A1212DCE9600AA5F1F /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D81F6A0212DCE9600AA5F1F /* GameManager.swift */; };
 		9D876A472137043B00B0D3F7 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D876A462137043B00B0D3F7 /* Grid.swift */; };
+		9D8FAD4921EA5CA9002F437D /* catapult.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8FAD4721EA5CA9002F437D /* catapult.png */; };
+		9D8FAD4A21EA5CA9002F437D /* catapult_activated.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D8FAD4821EA5CA9002F437D /* catapult_activated.png */; };
 		9DB475EB21E3C18F00DEA21F /* run.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB475EA21E3C18F00DEA21F /* run.png */; };
 		9DB475ED21E3C2AE00DEA21F /* skip.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DB475EC21E3C2AE00DEA21F /* skip.png */; };
 		9DC4D4B821549BFD00ED5B69 /* music.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9DC4D4B721549BFD00ED5B69 /* music.wav */; };
@@ -74,6 +76,8 @@
 		9D81F69A212DCDBF00AA5F1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D81F6A0212DCE9600AA5F1F /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		9D876A462137043B00B0D3F7 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		9D8FAD4721EA5CA9002F437D /* catapult.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = catapult.png; sourceTree = "<group>"; };
+		9D8FAD4821EA5CA9002F437D /* catapult_activated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = catapult_activated.png; sourceTree = "<group>"; };
 		9DB475EA21E3C18F00DEA21F /* run.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = run.png; sourceTree = "<group>"; };
 		9DB475EC21E3C2AE00DEA21F /* skip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skip.png; sourceTree = "<group>"; };
 		9DC4D4B721549BFD00ED5B69 /* music.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = music.wav; sourceTree = "<group>"; };
@@ -126,7 +130,16 @@
 				9D81F68E212DCDBD00AA5F1F /* GameScene.swift */,
 				9D81F6A0212DCE9600AA5F1F /* GameManager.swift */,
 				9D876A462137043B00B0D3F7 /* Grid.swift */,
+				9D8FAD4621EA4FA4002F437D /* App Icons */,
 				9D81F69A212DCDBF00AA5F1F /* Info.plist */,
+				9DC4D4B721549BFD00ED5B69 /* music.wav */,
+			);
+			path = Repetition;
+			sourceTree = "<group>";
+		};
+		9D8FAD4621EA4FA4002F437D /* App Icons */ = {
+			isa = PBXGroup;
+			children = (
 				9D654BB721D9E679007C6965 /* diamond.png */,
 				9D478E6F2155C7DA009C798A /* insanity.png */,
 				9D478E712155CC4C009C798A /* insanity_red.png */,
@@ -148,10 +161,11 @@
 				9D4DF57B21E66A21000E0602 /* run_activated.png */,
 				9D50B6E521E2AAF00003F48B /* decrease.png */,
 				9DF4987A21DC5D44001B595B /* double.png */,
+				9D8FAD4821EA5CA9002F437D /* catapult_activated.png */,
+				9D8FAD4721EA5CA9002F437D /* catapult.png */,
 				9D4DF57D21E66A30000E0602 /* double_activated.png */,
-				9DC4D4B721549BFD00ED5B69 /* music.wav */,
 			);
-			path = Repetition;
+			path = "App Icons";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +242,7 @@
 				9DF4987B21DC5D44001B595B /* double.png in Resources */,
 				9DDBA4BE21632737004B5B6D /* back.png in Resources */,
 				9D50B6E621E2AAF00003F48B /* decrease.png in Resources */,
+				9D8FAD4921EA5CA9002F437D /* catapult.png in Resources */,
 				9DB475EB21E3C18F00DEA21F /* run.png in Resources */,
 				9DF0FB0021D864A20065DE0F /* Actions.sks in Resources */,
 				9D645A0B21DAC9FC00BA139A /* shop.png in Resources */,
@@ -235,6 +250,7 @@
 				9D67FF4A21E26EAF00420D74 /* escape.png in Resources */,
 				9D4DF57621E66826000E0602 /* home_insanity.png in Resources */,
 				9D4DF57C21E66A21000E0602 /* run_activated.png in Resources */,
+				9D8FAD4A21EA5CA9002F437D /* catapult_activated.png in Resources */,
 				9D81F699212DCDBF00AA5F1F /* LaunchScreen.storyboard in Resources */,
 				9D478E702155C7DA009C798A /* insanity.png in Resources */,
 				9D4DF57E21E66A30000E0602 /* double_activated.png in Resources */,

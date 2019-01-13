@@ -458,9 +458,9 @@ class GameScene: SKScene {
                 activatedPowerUp = SKSpriteNode(texture: ii)
             }
             else if selectedPowerUp == 4 {
-                i = SKTexture(imageNamed: "clover")
+                i = SKTexture(imageNamed: "catapult")
                 powerUp = SKSpriteNode(texture: i)
-                ii = SKTexture(imageNamed: "clover_activated")
+                ii = SKTexture(imageNamed: "catapult_activated")
                 activatedPowerUp = SKSpriteNode(texture: ii)
             }
             powerUp.name = "power_up"
@@ -541,29 +541,14 @@ class GameScene: SKScene {
                 if node.name == "start_button" {
                     isUserReady = true
                     if selectedPowerUp != 0 {
-                        if selectedPowerUp == 1 || selectedPowerUp == 2 || selectedPowerUp == 4 {
+                        if selectedPowerUp == 1 || selectedPowerUp == 2 {
                             powerUp.isHidden = true
                             activatedPowerUp.isHidden = false
                         }
                     }
                     self.startButton.removeFromParent()
                 }
-                /*
-                if node.name == "skip_level" {
-                    print("test")
-                    self.mustSkipLevel = true
-                    self.skipLevel.isHidden = true
-                    self.hasSkippedLevel = true
-                    
-                    self.grid.solutionR.removeAll()
-                    self.grid.solutionC.removeAll()
-                    self.grid.guessR.removeAll()
-                    self.grid.guessC.removeAll()
-                    self.grid.carbonR.removeAll()
-                    self.grid.carbonC.removeAll()
-                    self.nextLevel = true
-                }
- */
+
                 if node.name == "end_button" {
                     toMenu()
                     game.updateScore()
@@ -578,20 +563,23 @@ class GameScene: SKScene {
                 }
                 
                 if node.name == "power_up" {
-                    if selectedPowerUp == 3 {
-                        powerUp.isHidden = true
-                        activatedPowerUp.isHidden = false
-                        self.mustSkipLevel = true
-                        //self.skipLevel.isHidden = true
-                        self.hasSkippedLevel = true
-                        
-                        self.grid.solutionR.removeAll()
-                        self.grid.solutionC.removeAll()
-                        self.grid.guessR.removeAll()
-                        self.grid.guessC.removeAll()
-                        self.grid.carbonR.removeAll()
-                        self.grid.carbonC.removeAll()
-                        self.nextLevel = true
+                    if gameLogo.isHidden && isUserReady {
+                        if selectedPowerUp == 3 {
+                            if grid.fingerprint.isHidden {
+                                powerUp.isHidden = true
+                                activatedPowerUp.isHidden = false
+                                self.mustSkipLevel = true
+                                self.hasSkippedLevel = true
+                                
+                                self.grid.solutionR.removeAll()
+                                self.grid.solutionC.removeAll()
+                                self.grid.guessR.removeAll()
+                                self.grid.guessC.removeAll()
+                                self.grid.carbonR.removeAll()
+                                self.grid.carbonC.removeAll()
+                                self.nextLevel = true
+                            }
+                        }
                     }
                 }
                 
@@ -679,25 +667,12 @@ class GameScene: SKScene {
     
     func userConfirmation() {
         //Create start button
-        if gameOver == true {
-            
+        if gameOver {
             if isInsane {
                 endButtonInsanity.isHidden = false
-                self.endButtonInsanity.run(
-                    SKAction.sequence([
-                        SKAction.wait(forDuration: 0.47),
-                        SKAction.unhide()
-                        ])
-                )
             }
             else {
                 endButton.isHidden = false
-                self.endButton.run(
-                    SKAction.sequence([
-                        SKAction.wait(forDuration: 0.47),
-                        SKAction.unhide()
-                        ])
-                )
             }
             
             self.hasSkippedLevel = false

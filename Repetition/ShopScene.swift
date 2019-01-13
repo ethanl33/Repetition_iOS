@@ -225,7 +225,7 @@ class ShopScene: SKScene {
                             item4Label.isHidden = true
                             item4Carbon.isHidden = true
                             item4.strokeColor = SKColor.cyan
-                            info.text = "Increase Carbon Luck"
+                            info.text = "Postmortem Boost"
                             UserDefaults.standard.set(4, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item4isUnlocked")
                             deselectOtherBoxes(num: 4)
@@ -238,7 +238,7 @@ class ShopScene: SKScene {
                     }
                     else {
                         item4.strokeColor = SKColor.cyan
-                        info.text = "Increase Carbon Luck"
+                        info.text = "Postmortem Boost"
                         UserDefaults.standard.set(4, forKey: "selectedPowerUp")
                         deselectOtherBoxes(num: 4)
                     }
@@ -727,7 +727,7 @@ class ShopScene: SKScene {
         item4Carbon.setScale(0.7)
         self.addChild(item4Carbon)
         
-        let i5 = SKTexture(imageNamed: "clover")
+        let i5 = SKTexture(imageNamed: "catapult")
         item4Picture = SKSpriteNode(texture: i5)
         item4Picture.name = "item4"
         item4Picture.position = CGPoint(x: item4.position.x, y: item4.position.y)
