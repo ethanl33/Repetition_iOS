@@ -67,6 +67,7 @@ class ShopScene: SKScene {
 
 
     var info: SKLabelNode!
+    var instruction: SKLabelNode!
     var descrip: SKLabelNode!
     
     var isInsane: Bool = UserDefaults.standard.bool(forKey: "isInsane")
@@ -91,6 +92,18 @@ class ShopScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         carbon.position = CGPoint(x: carbonLabel.frame.maxX + 37, y: (frame.size.height / 2) - 101)
+        
+        if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 1 || UserDefaults.standard.integer(forKey: "selectedPowerUp") == 2 || UserDefaults.standard.integer(forKey: "selectedPowerUp") == 4 {
+            instruction.text = "(Automatic Activation)"
+            instruction.isHidden = false
+        }
+        else if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 3 {
+            instruction.text = "(Tap Icon In-Game To Activate)"
+            instruction.isHidden = false
+        }
+        else {
+            instruction.isHidden = true
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -137,7 +150,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -173,7 +186,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -207,9 +220,10 @@ class ShopScene: SKScene {
                         UserDefaults.standard.set(3, forKey: "selectedPowerUp")
                         deselectOtherBoxes(num: 3)
                     }
+                    
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -244,80 +258,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
-                            ])
-                    )
-                }
-                
-                if node.name == "item5" {
-                    print("test")
-                    info.removeAllActions()
-                    info.text = "Tier 2 Power-Ups Coming Soon..."
-                    self.info.run(
-                        SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
-                            ])
-                    )
-                }
-                
-                if node.name == "item6" {
-                    info.removeAllActions()
-                    info.text = "Tier 2 Power-Ups Coming Soon..."
-                    self.info.run(
-                        SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
-                            ])
-                    )
-                }
-                
-                if node.name == "item7" {
-                    info.removeAllActions()
-                    info.text = "Tier 2 Power-Ups Coming Soon..."
-                    self.info.run(
-                        SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
-                            ])
-                    )
-                }
-                
-                if node.name == "item8" {
-                    info.removeAllActions()
-                    info.text = "Tier 2 Power-Ups Coming Soon..."
-                    self.info.run(
-                        SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
-                            ])
-                    )
-                }
-                
-                if node.name == "item9" {
-                    info.removeAllActions()
-                    info.text = "Tier 1 Power-Ups Coming Soon..."
-                    self.info.run(
-                        SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
-                            ])
-                    )
-                }
-                
-                if node.name == "item10" {
-                    info.removeAllActions()
-                    info.text = "Tier 1 Power-Ups Coming Soon..."
-                    self.info.run(
-                        SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -352,7 +293,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -387,7 +328,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -421,7 +362,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -456,7 +397,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -490,7 +431,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -525,7 +466,7 @@ class ShopScene: SKScene {
                     }
                     self.info.run(
                         SKAction.sequence([
-                            SKAction.fadeAlpha(to: 0.5, duration: 0.5),
+                            SKAction.fadeAlpha(to: 1.0, duration: 0.5),
                             SKAction.wait(forDuration: 2.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
@@ -614,6 +555,14 @@ class ShopScene: SKScene {
         info.fontColor = SKColor.white
         self.addChild(info)
         
+        instruction = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+        instruction.position = CGPoint(x: info.position.x, y: info.position.y - 50)
+        instruction.fontSize = 28
+        instruction.isHidden = true
+        instruction.alpha = 0.5
+        //instruction.text = "(Tap Icon In-Game To Activate)"
+        instruction.fontColor = SKColor.white
+        self.addChild(instruction)
         
         
         item1 = SKShapeNode(rectOf: CGSize(width: 200, height: 100), cornerRadius: 10)
@@ -978,5 +927,6 @@ class ShopScene: SKScene {
         }
     }
 
+    
     
 }

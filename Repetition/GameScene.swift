@@ -28,6 +28,7 @@ class GameScene: SKScene {
     var carbon: SKSpriteNode!
     var powerUp: SKSpriteNode!
     var activatedPowerUp: SKSpriteNode!
+    var tap: SKSpriteNode!
 
     var isInsane: Bool = UserDefaults.standard.bool(forKey: "isInsane")
     var isMute: Bool = UserDefaults.standard.bool(forKey: "isMute")
@@ -472,7 +473,16 @@ class GameScene: SKScene {
             activatedPowerUp.isHidden = true
             self.addChild(activatedPowerUp)
         }
-        
+        /*
+        let imageTexture9 = SKTexture(imageNamed: "tap")
+        tap = SKSpriteNode(texture: imageTexture9)
+        tap.isHidden = false
+        tap.name = "tap"
+        tap.zPosition = 1
+        tap.position = CGPoint(x: powerUp.position.x + 10, y: powerUp.position.y - 25)
+        //endButtonInsanity.setScale(1.3)
+        self.addChild(tap)
+        */
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -505,6 +515,8 @@ class GameScene: SKScene {
                     insanityOff.isHidden = false
                     insanityOn.isHidden = true
                     isInsane = false
+                    self.insanityTeaser.alpha = 0.0
+
 
                     UserDefaults.standard.set(isInsane, forKey: "isInsane")
 
@@ -517,6 +529,7 @@ class GameScene: SKScene {
                     insanityOff.isHidden = true
                     insanityOn.isHidden = false
                     isInsane = true
+
 
                     UserDefaults.standard.set(isInsane, forKey: "isInsane")
                     
@@ -601,6 +614,7 @@ class GameScene: SKScene {
             self.gameLogo.isHidden = true
         }
 
+        self.insanityTeaser.alpha = 0.0
         self.instructionToStart.isHidden = true
         self.insanityOff.isHidden = true
         self.insanityOn.isHidden = true

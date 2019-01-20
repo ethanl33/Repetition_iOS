@@ -44,7 +44,7 @@ class Grid:SKSpriteNode {
             return nil
         }
         
-        self.init(texture: texture, color:SKColor.clear, size: texture.size())
+        self.init(texture: texture, color: SKColor.clear, size: texture.size())
         self.blockSize = blockSize
         self.rows = rows
         self.cols = cols
