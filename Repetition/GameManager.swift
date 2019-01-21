@@ -62,7 +62,7 @@ class GameManager {
                 self.scene.instructionToGo.isHidden = true
                 
                 if self.scene.isInsane {
-                    self.scene.correct.fontColor = SKColor.red
+                    //self.scene.correct.fontColor = SKColor.red
                     self.scene.correct.text = "Correct"
                 }
                 else if self.scene.mustSkipLevel {
@@ -110,11 +110,11 @@ class GameManager {
                 else {
                     if self.scene.isInsane {
                         self.scene.instructionToMenu.text = "Incorrect: Correction Highlighted"
-                        self.scene.instructionToMenu.fontColor = SKColor.red
+                        //self.scene.instructionToMenu.fontColor = SKColor.red
                     }
                     else {
                         self.scene.instructionToMenu.text = "Incorrect: Correction Highlighted"
-                        self.scene.instructionToMenu.fontColor = SKColor.cyan
+                        //self.scene.instructionToMenu.fontColor = SKColor.cyan
                     }
                 }
                 self.scene.instructionToMenu.isHidden = false

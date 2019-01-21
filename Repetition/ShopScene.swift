@@ -24,6 +24,7 @@ class ShopScene: SKScene {
     var item10: SKShapeNode!
     
     var backButton: SKSpriteNode!
+    var touchBackButton: SKShapeNode!
     
     var shopLogo: SKLabelNode!
     
@@ -79,6 +80,7 @@ class ShopScene: SKScene {
     override func didMove(to view: SKView) {
         initializeShop()
         updateShop()
+        scene?.scaleMode = .aspectFill
         
         /*
         UserDefaults.standard.set(0, forKey: "selectedPowerUp")
@@ -86,24 +88,31 @@ class ShopScene: SKScene {
         UserDefaults.standard.set(false, forKey: "item2isUnlocked")
         UserDefaults.standard.set(false, forKey: "item3isUnlocked")
         UserDefaults.standard.set(false, forKey: "item4isUnlocked")
-        UserDefaults.standard.set(10000, forKey: "carbonPoint")
+        UserDefaults.standard.set(1000, forKey: "carbonPoint")
  */
     }
     
     override func update(_ currentTime: TimeInterval) {
         carbon.position = CGPoint(x: carbonLabel.frame.maxX + 37, y: (frame.size.height / 2) - 101)
-        
-        if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 1 || UserDefaults.standard.integer(forKey: "selectedPowerUp") == 2 || UserDefaults.standard.integer(forKey: "selectedPowerUp") == 4 {
-            instruction.text = "(Automatic Activation)"
-            instruction.isHidden = false
-        }
-        else if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 3 {
-            instruction.text = "(Tap Icon In-Game To Activate)"
-            instruction.isHidden = false
+        if info.text != "More Carbon Points Needed" {
+            if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 1 || UserDefaults.standard.integer(forKey: "selectedPowerUp") == 2 || UserDefaults.standard.integer(forKey: "selectedPowerUp") == 4 {
+                instruction.text = "(Automatic Activation)"
+                instruction.isHidden = false
+                info.alpha = 1.0
+            }
+            else if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 3 {
+                instruction.text = "(Tap Icon In-Game To Activate)"
+                instruction.isHidden = false
+                info.alpha = 1.0
+            }
+            else {
+                instruction.isHidden = true
+            }
         }
         else {
             instruction.isHidden = true
         }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -126,7 +135,7 @@ class ShopScene: SKScene {
                 if node.name == "item1" {
                     info.removeAllActions()
                     if !UserDefaults.standard.bool(forKey: "item1isUnlocked") {
-                        if carbonPoint > 500 {
+                        if carbonPoint >= 500 {
                             item1Picture.isHidden = false
                             item1Label.isHidden = true
                             item1Carbon.isHidden = true
@@ -135,6 +144,7 @@ class ShopScene: SKScene {
                             UserDefaults.standard.set(1, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item1isUnlocked")
                             deselectOtherBoxes(num: 1)
+                            carbonPoint -= 500
                             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "carbonPoint") - 500, forKey: "carbonPoint")
                             carbonLabel.text = "\(UserDefaults.standard.integer(forKey: "carbonPoint"))"
                         }
@@ -151,8 +161,8 @@ class ShopScene: SKScene {
                     self.info.run(
                         SKAction.sequence([
                             SKAction.fadeAlpha(to: 1.0, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
+                            //SKAction.wait(forDuration: 2.5),
+                            //SKAction.fadeOut(withDuration: 0.5)
                             ])
                     )
                 }
@@ -162,7 +172,7 @@ class ShopScene: SKScene {
                 if node.name == "item2" {
                     info.removeAllActions()
                     if !UserDefaults.standard.bool(forKey: "item2isUnlocked") {
-                        if carbonPoint > 500 {
+                        if carbonPoint >= 500 {
                             item2Picture.isHidden = false
                             item2Label.isHidden = true
                             item2Carbon.isHidden = true
@@ -171,6 +181,7 @@ class ShopScene: SKScene {
                             UserDefaults.standard.set(2, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item2isUnlocked")
                             deselectOtherBoxes(num: 2)
+                            carbonPoint -= 500
                             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "carbonPoint") - 500, forKey: "carbonPoint")
                             carbonLabel.text = "\(UserDefaults.standard.integer(forKey: "carbonPoint"))"
                         }
@@ -187,8 +198,8 @@ class ShopScene: SKScene {
                     self.info.run(
                         SKAction.sequence([
                             SKAction.fadeAlpha(to: 1.0, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
+                            //SKAction.wait(forDuration: 2.5),
+                            //SKAction.fadeOut(withDuration: 0.5)
                             ])
                     )
                 }
@@ -198,7 +209,7 @@ class ShopScene: SKScene {
                 if node.name == "item3" {
                     info.removeAllActions()
                     if !UserDefaults.standard.bool(forKey: "item3isUnlocked") {
-                        if carbonPoint > 500 {
+                        if carbonPoint >= 500 {
                             item3Picture.isHidden = false
                             item3Label.isHidden = true
                             item3Carbon.isHidden = true
@@ -207,6 +218,7 @@ class ShopScene: SKScene {
                             UserDefaults.standard.set(3, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item3isUnlocked")
                             deselectOtherBoxes(num: 3)
+                            carbonPoint -= 500
                             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "carbonPoint") - 500, forKey: "carbonPoint")
                             carbonLabel.text = "\(UserDefaults.standard.integer(forKey: "carbonPoint"))"
                         }
@@ -224,8 +236,8 @@ class ShopScene: SKScene {
                     self.info.run(
                         SKAction.sequence([
                             SKAction.fadeAlpha(to: 1.0, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
+                            //SKAction.wait(forDuration: 2.5),
+                            //SKAction.fadeOut(withDuration: 0.5)
                             ])
                     )
                 }
@@ -234,7 +246,7 @@ class ShopScene: SKScene {
                 if node.name == "item4" {
                     info.removeAllActions()
                     if !UserDefaults.standard.bool(forKey: "item4isUnlocked") {
-                        if carbonPoint > 500 {
+                        if carbonPoint >= 500 {
                             item4Picture.isHidden = false
                             item4Label.isHidden = true
                             item4Carbon.isHidden = true
@@ -243,6 +255,7 @@ class ShopScene: SKScene {
                             UserDefaults.standard.set(4, forKey: "selectedPowerUp")
                             UserDefaults.standard.set(true, forKey: "item4isUnlocked")
                             deselectOtherBoxes(num: 4)
+                            carbonPoint -= 500
                             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "carbonPoint") - 500, forKey: "carbonPoint")
                             carbonLabel.text = "\(UserDefaults.standard.integer(forKey: "carbonPoint"))"
                         }
@@ -259,8 +272,8 @@ class ShopScene: SKScene {
                     self.info.run(
                         SKAction.sequence([
                             SKAction.fadeAlpha(to: 1.0, duration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
-                            SKAction.fadeOut(withDuration: 0.5)
+                            //SKAction.wait(forDuration: 2.5),
+                            //SKAction.fadeOut(withDuration: 0.5)
                             ])
                     )
                 }
@@ -551,7 +564,21 @@ class ShopScene: SKScene {
         info.position = CGPoint(x: 0, y: -(frame.size.height / 2) + colorY + 25)
         info.fontSize = 28
         info.alpha = 0.0
-        info.text = "More Carbon Points Needed"
+        if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 1 {
+            info.text = "Double Carbon Points"
+        }
+        else if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 2 {
+            info.text = "Head Start"
+        }
+        else if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 3 {
+            info.text = "Skip A Level"
+        }
+        else if UserDefaults.standard.integer(forKey: "selectedPowerUp") == 4 {
+            info.text = "Postmortem Boost"
+        }
+        else {
+            info.text = "More Carbon Points Needed"
+        }
         info.fontColor = SKColor.white
         self.addChild(info)
         
@@ -830,12 +857,16 @@ class ShopScene: SKScene {
         shopLogo.text = "Shop"
         //gameLogo.fontColor = SKColor(red: 36/255, green: 93/255, blue: 104/255, alpha: 1)
         //gameLogo.fontColor = SKColor(red: 245/255, green: 208/255, blue: 76/255, alpha: 1)
+        /*
         if isInsane {
             shopLogo.fontColor = SKColor.red
         }
         else {
             shopLogo.fontColor = SKColor.cyan
         }
+ */
+        shopLogo.fontColor = SKColor.cyan
+
         self.addChild(shopLogo)
         
         let imageTexture1 = SKTexture(imageNamed: "back")
@@ -843,11 +874,28 @@ class ShopScene: SKScene {
         self.isUserInteractionEnabled = true
         backButton.name = "back_button"
         backButton.isHidden = false
-        backButton.zPosition = 1
+        backButton.zPosition = 0.5
         backButton.position = CGPoint(x: -(frame.size.width / 2) + posX, y: (frame.size.height / 2) - 75)
         //print(frame.size.height)
         backButton.setScale(0.804)
         self.addChild(backButton)
+        
+        touchBackButton = SKShapeNode()
+        touchBackButton.isHidden = false
+        touchBackButton.zPosition = 1
+        touchBackButton.position = CGPoint(x: -(frame.size.width / 2) + posX, y: (frame.size.height / 2) - 75)
+        touchBackButton.fillColor = SKColor.clear
+        touchBackButton.strokeColor = SKColor.clear
+        let tl = CGPoint(x: -50, y: 50)
+        let bl = CGPoint(x: -50, y: -50)
+        let tr = CGPoint(x: 50, y: 50)
+        let br = CGPoint(x: 50, y: -50)
+        let pos = CGMutablePath()
+        pos.addLine(to: tl)
+        pos.addLines(between: [tl, tr, br, bl])
+        self.touchBackButton.path = pos
+        touchBackButton.name = "back_button"
+        self.addChild(touchBackButton)
         
         
     }

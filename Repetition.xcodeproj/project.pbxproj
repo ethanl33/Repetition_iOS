@@ -10,6 +10,7 @@
 		9D3AEA9D2161C64100E5B9F2 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3AEA9C2161C64100E5B9F2 /* ShopScene.swift */; };
 		9D478E702155C7DA009C798A /* insanity.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D478E6F2155C7DA009C798A /* insanity.png */; };
 		9D478E722155CC4C009C798A /* insanity_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D478E712155CC4C009C798A /* insanity_red.png */; };
+		9D4B16F121F41BED000F1265 /* home_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4B16F021F41BED000F1265 /* home_button.png */; };
 		9D4DF57421E6681E000E0602 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4DF57321E6681E000E0602 /* home.png */; };
 		9D4DF57621E66826000E0602 /* home_insanity.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4DF57521E66826000E0602 /* home_insanity.png */; };
 		9D4DF57821E66A13000E0602 /* escape_activated.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4DF57721E66A13000E0602 /* escape_activated.png */; };
@@ -51,6 +52,7 @@
 		9D3AEA9C2161C64100E5B9F2 /* ShopScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
 		9D478E6F2155C7DA009C798A /* insanity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insanity.png; sourceTree = "<group>"; };
 		9D478E712155CC4C009C798A /* insanity_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insanity_red.png; sourceTree = "<group>"; };
+		9D4B16F021F41BED000F1265 /* home_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_button.png; sourceTree = "<group>"; };
 		9D4DF57321E6681E000E0602 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		9D4DF57521E66826000E0602 /* home_insanity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_insanity.png; sourceTree = "<group>"; };
 		9D4DF57721E66A13000E0602 /* escape_activated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = escape_activated.png; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				9D73ACE621E180E900A44D91 /* fast_forward.png */,
 				9D50B6E721E2BFCB0003F48B /* clover.png */,
 				9D4DF57921E66A19000E0602 /* clover_activated.png */,
+				9D4B16F021F41BED000F1265 /* home_button.png */,
 				9D4DF57321E6681E000E0602 /* home.png */,
 				9D4DF57521E66826000E0602 /* home_insanity.png */,
 				9DF4988221DC7F86001B595B /* last_resort.png */,
@@ -239,6 +242,7 @@
 				9D81F696212DCDBF00AA5F1F /* Assets.xcassets in Resources */,
 				9D654BC221D9ED75007C6965 /* volume.png in Resources */,
 				9D50B6E821E2BFCB0003F48B /* clover.png in Resources */,
+				9D4B16F121F41BED000F1265 /* home_button.png in Resources */,
 				9DF0FAFE21D864960065DE0F /* ShopScene.sks in Resources */,
 				9D73ACE521E176AB00A44D91 /* fingerprint.png in Resources */,
 				9D654BB821D9E679007C6965 /* diamond.png in Resources */,

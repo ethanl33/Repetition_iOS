@@ -15,9 +15,11 @@ class GameScene: SKScene {
     var beginGame: SKShapeNode!
     var startLevel: SKShapeNode!
     var startButton: SKShapeNode!
-    var endButton: SKSpriteNode!
-    var endButtonInsanity: SKSpriteNode!
+    var endButton: SKShapeNode!
+    //var endButton: SKSpriteNode!
+    //var endButtonInsanity: SKSpriteNode!
     var touchToStart: SKShapeNode!
+    var touchPowerUp: SKShapeNode!
     var skipLevel: SKShapeNode!
 
     var volumeButton: SKSpriteNode!
@@ -60,6 +62,7 @@ class GameScene: SKScene {
     var hasSkippedLevel = false
     var mustSkipLevel = false
     var mustHideSkip = false
+    var displayPowerUp = false
     var count: Int = 0
     var patternLength: Int = 1
     var carbonPoint: Int = UserDefaults.standard.integer(forKey: "carbonPoint")
@@ -118,6 +121,8 @@ class GameScene: SKScene {
             game.currentScore = 5
         }
         
+        scene?.scaleMode = .aspectFill
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -131,7 +136,6 @@ class GameScene: SKScene {
     }
     
     private func initializeMenu() {
-        
         //Create game title
         gameLogo = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         gameLogo.zPosition = 1
@@ -399,7 +403,8 @@ class GameScene: SKScene {
         carbon.position = CGPoint(x: carbonLabel.frame.maxX + 37, y: (frame.size.height / 2) - 101)
         self.addChild(carbon)
         
-        let imageTexture7 = SKTexture(imageNamed: "home")
+        /*
+        let imageTexture7 = SKTexture(imageNamed: "home_button")
         endButton = SKSpriteNode(texture: imageTexture7)
         endButton.isHidden = true
         endButton.name = "end_button"
@@ -407,7 +412,25 @@ class GameScene: SKScene {
         endButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
         //endButton.setScale(1.3)
         self.addChild(endButton)
+        */
         
+        endButton = SKShapeNode()
+        endButton.name = "end_button"
+        endButton.strokeColor = SKColor.clear
+        endButton.isHidden = true
+        endButton.zPosition = 1
+        endButton.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
+        endButton.fillColor = SKColor.cyan
+        let t = CGPoint(x: -52, y: 52)
+        let b = CGPoint(x: -52, y: -52)
+        let m = CGPoint(x: 52, y: 0)
+        let p = CGMutablePath()
+        p.addLine(to: t)
+        p.addLines(between: [t, b, m])
+        self.endButton.path = p
+        self.addChild(endButton)
+ 
+        /*
         let imageTexture8 = SKTexture(imageNamed: "home_insanity")
         endButtonInsanity = SKSpriteNode(texture: imageTexture8)
         endButtonInsanity.isHidden = true
@@ -416,6 +439,7 @@ class GameScene: SKScene {
         endButtonInsanity.position = CGPoint(x: 0, y: (frame.size.height / -2) + 201)
         //endButtonInsanity.setScale(1.3)
         self.addChild(endButtonInsanity)
+        */
         
         instructionToStart = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         instructionToStart.zPosition = 1
@@ -467,12 +491,32 @@ class GameScene: SKScene {
             powerUp.name = "power_up"
             powerUp.position = CGPoint(x: volumeButton.position.x - 25, y: carbon.position.y)
             powerUp.isHidden = false
+            powerUp.zPosition = 0.5
             self.addChild(powerUp)
             
             activatedPowerUp.position = CGPoint(x: volumeButton.position.x - 25, y: carbon.position.y)
             activatedPowerUp.isHidden = true
+            activatedPowerUp.zPosition = 0.5
             self.addChild(activatedPowerUp)
         }
+        
+        
+        touchPowerUp = SKShapeNode()
+        touchPowerUp.isHidden = false
+        touchPowerUp.zPosition = 1
+        touchPowerUp.position = CGPoint(x: volumeButton.position.x - 25, y: carbon.position.y)
+        touchPowerUp.fillColor = SKColor.clear
+        touchPowerUp.strokeColor = SKColor.clear
+        let tl = CGPoint(x: -50, y: 50)
+        let bl = CGPoint(x: -50, y: -50)
+        let tr = CGPoint(x: 50, y: 50)
+        let br = CGPoint(x: 50, y: -50)
+        let pos = CGMutablePath()
+        pos.addLine(to: tl)
+        pos.addLines(between: [tl, tr, br, bl])
+        self.touchPowerUp.path = pos
+        touchPowerUp.name = "touch_power_up"
+        self.addChild(touchPowerUp)
         /*
         let imageTexture9 = SKTexture(imageNamed: "tap")
         tap = SKSpriteNode(texture: imageTexture9)
@@ -515,6 +559,7 @@ class GameScene: SKScene {
                     insanityOff.isHidden = false
                     insanityOn.isHidden = true
                     isInsane = false
+                    insanityTeaser.isHidden = true
                     self.insanityTeaser.alpha = 0.0
 
 
@@ -536,11 +581,12 @@ class GameScene: SKScene {
                     gameLogo.fontColor = SKColor.red
                     //beginGame.fillColor = SKColor.red
                     self.grid.isInsane = true
-                    
+                    insanityTeaser.isHidden = false
+
                     self.insanityTeaser.run(
                         SKAction.sequence([
                             SKAction.fadeIn(withDuration: 0.5),
-                            SKAction.wait(forDuration: 2.5),
+                            SKAction.wait(forDuration: 1.5),
                             SKAction.fadeOut(withDuration: 0.5)
                             ])
                     )
@@ -552,6 +598,7 @@ class GameScene: SKScene {
                 }
                 
                 if node.name == "start_button" {
+                    insanityTeaser.isHidden = true
                     isUserReady = true
                     if selectedPowerUp != 0 {
                         if selectedPowerUp == 1 || selectedPowerUp == 2 {
@@ -566,7 +613,6 @@ class GameScene: SKScene {
                     toMenu()
                     game.updateScore()
                     endButton.isHidden = true
-                    endButtonInsanity.isHidden = true
                     self.grid.box.removeFromParent()
                     
                     if selectedPowerUp != 0 {
@@ -575,7 +621,7 @@ class GameScene: SKScene {
                     }
                 }
                 
-                if node.name == "power_up" {
+                if node.name == "touch_power_up" {
                     if gameLogo.isHidden && isUserReady {
                         if selectedPowerUp == 3 {
                             if grid.fingerprint.isHidden {
@@ -615,6 +661,7 @@ class GameScene: SKScene {
         }
 
         self.insanityTeaser.alpha = 0.0
+        insanityTeaser.isHidden = true
         self.instructionToStart.isHidden = true
         self.insanityOff.isHidden = true
         self.insanityOn.isHidden = true
@@ -666,12 +713,14 @@ class GameScene: SKScene {
         }
         
         userConfirmation()
+        /*
         if self.isInsane {
             self.instructionToContinue.fontColor = SKColor.red
         }
         else {
             self.instructionToContinue.fontColor = SKColor.cyan
         }
+ */
         self.instructionToContinue.isHidden = false
         
 
@@ -682,13 +731,17 @@ class GameScene: SKScene {
     func userConfirmation() {
         //Create start button
         if gameOver {
+            
             if isInsane {
-                endButtonInsanity.isHidden = false
-            }
-            else {
+                //endButton.fillColor = SKColor.red
                 endButton.isHidden = false
             }
-            
+            else {
+                //endButton.fillColor = SKColor.cyan
+                endButton.isHidden = false
+            }
+ 
+
             self.hasSkippedLevel = false
             
             
@@ -722,13 +775,14 @@ class GameScene: SKScene {
                 )
 
             }
-            
+            /*
             if isInsane {
                 startButton.fillColor = SKColor.red
             }
             else {
                 startButton.fillColor = SKColor.cyan
             }
+ */
         }
         
     }
@@ -743,15 +797,34 @@ class GameScene: SKScene {
             if count < patternLength {
                 self.instructionToContinue.isHidden = true
                 self.correct.isHidden = true
-                
+                /*
                 if self.isInsane {
                     self.instructionToWait.fontColor = SKColor.red
                 }
                 else {
                     self.instructionToWait.fontColor = SKColor.cyan
                 }
+ */
+                if displayPowerUp == false {
+                    if selectedPowerUp == 1 {
+                        self.instructionToWait.fontColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
+                        self.instructionToWait.text = "Double Carbon Points"
+                    }
+                    else if selectedPowerUp == 2 {
+                        self.instructionToWait.fontColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
+                        self.instructionToWait.text = "Head Start"
+                    }
+                    else {
+                        self.instructionToWait.fontColor = SKColor.cyan
+                        self.instructionToWait.text = "Watch The Pattern"
+                    }
+                }
+                else {
+                    self.instructionToWait.fontColor = SKColor.cyan
+                    self.instructionToWait.text = "Watch The Pattern"
+                }
                 self.instructionToWait.isHidden = false
-                
+
                 mustHideSkip = false
                 
                 self.grid.runSimulation()
@@ -761,14 +834,20 @@ class GameScene: SKScene {
                 self.instructionToContinue.isHidden = true
                 self.correct.isHidden = true
                 self.instructionToWait.isHidden = true
-                
+                /*
                 if self.isInsane {
                     self.instructionToGo.fontColor = SKColor.red
                 }
                 else {
                     self.instructionToGo.fontColor = SKColor.cyan
                 }
+ */
+                if displayPowerUp == false && selectedPowerUp != 0 {
+                    displayPowerUp = true
+                }
                 self.instructionToGo.isHidden = false
+
+                
                 /*
                 if mustSkipLevel || mustHideSkip {
                     skipLevel.isHidden = true
@@ -791,6 +870,7 @@ class GameScene: SKScene {
         //self.instructionToContinue.isHidden = true
         self.instructionToMenu.isHidden = true
         self.grid.hideFingerprint()
+        displayPowerUp = false
 
         if isInsane {
             self.insanityOn.isHidden = false

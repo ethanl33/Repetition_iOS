@@ -180,7 +180,7 @@ class Grid:SKSpriteNode {
         box.fillColor = SKColor.white
         box.isHidden = true
         num = Int(arc4random_uniform(10))
-        if num == 2 {
+        if num == 7 {
             box.strokeColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
         }
         else {
