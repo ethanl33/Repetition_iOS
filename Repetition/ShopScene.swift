@@ -90,6 +90,7 @@ class ShopScene: SKScene {
         UserDefaults.standard.set(false, forKey: "item4isUnlocked")
         UserDefaults.standard.set(1000, forKey: "carbonPoint")
  */
+
     }
     
     override func update(_ currentTime: TimeInterval) {

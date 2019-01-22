@@ -133,6 +133,8 @@ class GameScene: SKScene {
             //skipLevel.isHidden = true
             mustHideSkip = true
         }
+        carbon.position = CGPoint(x: carbonLabel.frame.maxX + 37, y: (frame.size.height / 2) - 101)
+
     }
     
     private func initializeMenu() {
