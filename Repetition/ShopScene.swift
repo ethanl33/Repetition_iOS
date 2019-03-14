@@ -80,7 +80,6 @@ class ShopScene: SKScene {
     override func didMove(to view: SKView) {
         initializeShop()
         updateShop()
-        scene?.scaleMode = .aspectFill
         
         /*
         UserDefaults.standard.set(0, forKey: "selectedPowerUp")
@@ -127,7 +126,35 @@ class ShopScene: SKScene {
                 if node.name == "back_button" {
                     let scene = GameScene(fileNamed: "GameScene")!
                     let transition = SKTransition.moveIn(with: .left, duration: 0.3)
-                    scene.scaleMode = .aspectFill
+                    //scene.scaleMode = .aspectFill
+                    //scene.scaleMode = .aspectFit
+                    if UIDevice().userInterfaceIdiom == .phone {
+                        switch UIScreen.main.nativeBounds.height {
+                        case 1136:
+                            //print("iPhone 5 or 5S or 5C")
+                            scene.scaleMode = .aspectFit
+                        case 1334:
+                            //print("iPhone 6/6S/7/8")
+                            scene.scaleMode = .aspectFit
+                        case 1920, 2208:
+                            //print("iPhone 6+/6S+/7+/8+")
+                            scene.scaleMode = .aspectFit
+                        case 2436:
+                            //print("iPhone X, Xs")
+                            scene.scaleMode = .aspectFill
+                        case 2688:
+                            //print("iPhone Xs Max")
+                            scene.scaleMode = .aspectFill
+                        case 1792:
+                            //print("iPhone Xr")
+                            scene.scaleMode = .aspectFill
+                        default:
+                            //print("unknown")
+                            scene.scaleMode = .aspectFit
+
+                        }
+                    }
+                
                     self.view?.presentScene(scene, transition: transition)
                     //print("test")
                 }

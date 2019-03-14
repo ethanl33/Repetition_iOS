@@ -179,8 +179,8 @@ class Grid:SKSpriteNode {
         box.lineWidth = 10
         box.fillColor = SKColor.white
         box.isHidden = true
-        num = Int(arc4random_uniform(10))
-        if num == 7 {
+        num = Int(arc4random_uniform(4))
+        if num == 3 {
             box.strokeColor = SKColor(red: 255/255, green: 130/255, blue: 210/255, alpha: 1)
         }
         else {
@@ -225,7 +225,7 @@ class Grid:SKSpriteNode {
         solutionR.append(row)
         solutionC.append(col)
         
-        if num == 7 {
+        if num == 3 {
             carbonR.append(row)
             carbonC.append(col)
         }

@@ -121,8 +121,6 @@ class GameScene: SKScene {
             game.currentScore = 5
         }
         
-        scene?.scaleMode = .aspectFill
-        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -647,7 +645,35 @@ class GameScene: SKScene {
                 if node.name == "shop_button" {
                     let scene = ShopScene(fileNamed: "ShopScene")!
                     let transition = SKTransition.moveIn(with: .right, duration: 0.3)
-                    scene.scaleMode = .aspectFill
+                    //scene.scaleMode = .aspectFill
+                    //scene.scaleMode = .aspectFit
+                    if UIDevice().userInterfaceIdiom == .phone {
+                        switch UIScreen.main.nativeBounds.height {
+                        case 1136:
+                            //print("iPhone 5 or 5S or 5C")
+                            scene.scaleMode = .aspectFit
+                        case 1334:
+                            //print("iPhone 6/6S/7/8")
+                            scene.scaleMode = .aspectFit
+                        case 1920, 2208:
+                            //print("iPhone 6+/6S+/7+/8+")
+                            scene.scaleMode = .aspectFit
+                        case 2436:
+                            //print("iPhone X, Xs")
+                            scene.scaleMode = .aspectFill
+                        case 2688:
+                            //print("iPhone Xs Max")
+                            scene.scaleMode = .aspectFill
+                        case 1792:
+                            //print("iPhone Xr")
+                            scene.scaleMode = .aspectFill
+                        default:
+                            //print("unknown")
+                            scene.scaleMode = .aspectFit
+
+                        }
+                    }
+
                     self.view?.presentScene(scene, transition: transition)
                     scene.backgroundColor = SKColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)
                 }
